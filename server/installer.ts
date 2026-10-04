@@ -123,5 +123,5 @@ export async function listInstalled() {
 
 export async function listCatalog() {
   const entries = await readdir(catalogRoot(), { withFileTypes: true })
-  return entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name)
+  return entries.filter((entry) => entry.isDirectory() && !entry.name.startsWith('.')).map((entry) => entry.name)
 }

@@ -8,6 +8,8 @@ export type Route =
   | { page: 'submit' }
   | { page: 'library' }
   | { page: 'teams' }
+  | { page: 'admin' }
+  | { page: 'admin-edit'; id: string | null }
   | { page: 'missing' }
 
 type RouterValue = {
@@ -32,6 +34,14 @@ function parseLocation(): { route: Route; params: URLSearchParams } {
   if (head === 'publicar') return { route: { page: 'submit' }, params }
   if (head === 'biblioteca') return { route: { page: 'library' }, params }
   if (head === 'equipos') return { route: { page: 'teams' }, params }
+  // El panel solo existe en desarrollo: en producción /admin cae en "no existe".
+  if (import.meta.env.DEV && head === 'admin') {
+    if (parts[1] === 'nueva') return { route: { page: 'admin-edit', id: null }, params }
+    if (parts[1] === 'editar' && parts[2]) {
+      return { route: { page: 'admin-edit', id: decodeURIComponent(parts[2]) }, params }
+    }
+    return { route: { page: 'admin' }, params }
+  }
   return { route: { page: 'missing' }, params }
 }
 

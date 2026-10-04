@@ -256,10 +256,16 @@ export function SkillPage({ id }: { id: string }) {
 
           <div className="space-y-4 rounded-[14px] border border-line bg-surface p-4">
             <div>
-              <Stars value={skill.rating} />
-              <p className="mt-2 text-[14px] text-mute">
-                {skill.rating.toFixed(1)} de {formatCount(skill.ratingsCount)} valoraciones
-              </p>
+              {skill.ratingsCount === 0 ? (
+                <p className="text-[14px] text-mute">Aún sin valoraciones</p>
+              ) : (
+                <>
+                  <Stars value={skill.rating} />
+                  <p className="mt-2 text-[14px] text-mute">
+                    {skill.rating.toFixed(1)} de {formatCount(skill.ratingsCount)} valoraciones
+                  </p>
+                </>
+              )}
             </div>
             <dl className="space-y-2 text-[14px]">
               <Row label="Precio" value={skill.price} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Header } from './components/Header'
 import { skills } from './data/skills'
@@ -13,10 +13,17 @@ import { TeamsPage } from './pages/TeamsPage'
 import { StoreProvider } from './store'
 import { Button } from './ui/Button'
 import { CommandPalette } from './ui/CommandPalette'
+import { Skeleton } from './ui/Skeleton'
+
+// El panel de administración solo se compila en desarrollo (import.meta.env.DEV es una
+// constante en build): la web pública no incluye ni el código ni las rutas.
+const AdminPage = import.meta.env.DEV ? lazy(() => import('./admin/AdminPage')) : null
+const EditorPage = import.meta.env.DEV ? lazy(() => import('./admin/EditorPage')) : null
 
 function routeKey(route: ReturnType<typeof useRouter>['route']) {
   if (route.page === 'skill') return `skill:${route.id}`
   if (route.page === 'author') return `author:${route.author}`
+  if (route.page === 'admin-edit') return `admin-edit:${route.id ?? 'nueva'}`
   return route.page
 }
 
@@ -30,6 +37,7 @@ function titleFor(route: ReturnType<typeof useRouter>['route']) {
     return skill ? `${skill.name} · Skill Store` : 'Skill Store'
   }
   if (route.page === 'author') return `${route.author} · Skill Store`
+  if (route.page === 'admin' || route.page === 'admin-edit') return 'Administración · Skill Store'
   if (route.page === 'missing') return 'No encontrada · Skill Store'
   return 'Skill Store'
 }
@@ -75,6 +83,20 @@ function Shell() {
     if (route.page === 'submit') return <SubmitPage />
     if (route.page === 'library') return <LibraryPage />
     if (route.page === 'teams') return <TeamsPage />
+    if (route.page === 'admin' && AdminPage) {
+      return (
+        <Suspense fallback={<Skeleton className="mx-auto mt-10 h-96 max-w-[1200px]" />}>
+          <AdminPage />
+        </Suspense>
+      )
+    }
+    if (route.page === 'admin-edit' && EditorPage) {
+      return (
+        <Suspense fallback={<Skeleton className="mx-auto mt-10 h-96 max-w-[1200px]" />}>
+          <EditorPage id={route.id} />
+        </Suspense>
+      )
+    }
     return (
       <div className="mx-auto max-w-[1200px] px-5 py-16">
         <h1 className="text-[32px] font-medium tracking-tight">Esa página no existe</h1>
@@ -110,7 +132,14 @@ function Shell() {
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-[1200px] flex-col gap-1 px-5 py-8 text-[13px] text-mute sm:flex-row sm:items-center sm:justify-between">
           <p>Skill Store</p>
-          <p>Instalación local en Cursor, Claude y Codex.</p>
+          <p className="flex items-center gap-4">
+            {import.meta.env.DEV ? (
+              <button type="button" onClick={() => router.navigate('/admin')} className="hover:text-ink">
+                Administración
+              </button>
+            ) : null}
+            <span>Instalación local en Cursor, Claude y Codex.</span>
+          </p>
         </div>
       </footer>
       <CommandPalette open={palette} onClose={() => setPalette(false)} />

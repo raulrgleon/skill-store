@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Skills borradas desde el panel /admin (recuperables a mano)
+catalog/.trash/

@@ -58,11 +58,15 @@ export function SkillCard({ skill, quiet = false, large = false }: SkillCardProp
       ) : null}
 
       <div className="mt-auto flex items-center justify-between gap-3 pt-4">
-        <p className="flex items-center gap-1.5 text-[13px] text-mute">
-          <Star size={13} className="fill-current text-ink" aria-hidden />
-          <span className="text-ink">{skill.rating.toFixed(1)}</span>
-          <span>{formatCount(skill.ratingsCount)}</span>
-        </p>
+        {skill.ratingsCount === 0 ? (
+          <p className="text-[13px] text-mute">Nueva</p>
+        ) : (
+          <p className="flex items-center gap-1.5 text-[13px] text-mute">
+            <Star size={13} className="fill-current text-ink" aria-hidden />
+            <span className="text-ink">{skill.rating.toFixed(1)}</span>
+            <span>{formatCount(skill.ratingsCount)}</span>
+          </p>
+        )}
         {quiet ? null : (
           <div className="flex shrink-0 gap-1.5">
             <Button

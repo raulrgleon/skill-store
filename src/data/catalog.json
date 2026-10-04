@@ -1,0 +1,1606 @@
+[
+  {
+    "id": "seo-auditor",
+    "name": "SEO Auditor",
+    "subtitle": "Audita landings como un estratega",
+    "author": "Skill Store Labs",
+    "category": "Marketing",
+    "rating": 4.9,
+    "ratingsCount": 12840,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "ChatGPT",
+      "Gemini"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "partial",
+      "Codex": "none",
+      "Gemini": "partial",
+      "Copilot": "none"
+    },
+    "description": "Enseña al agente a revisar título, H1, velocidad, intención de búsqueda y CTAs. Entrega un plan priorizado, no una lista genérica de “mejoras SEO”.",
+    "whatsNew": "Ahora detecta canibalización de keywords y propone un mapa de enlaces internos.",
+    "version": "2.4",
+    "size": "184 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0A84FF",
+      "to": "#64D2FF",
+      "glyph": "S"
+    },
+    "story": {
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
+      "kicker": "Skill del día",
+      "title": "Tu agente ya sabe auditar una landing",
+      "subtitle": "Una skill, un informe y un plan. Sin copy genérico."
+    },
+    "screenshots": [
+      {
+        "title": "Informe",
+        "body": "Prioridad, impacto y esfuerzo en una sola vista.",
+        "from": "#0A84FF",
+        "to": "#5E5CE6"
+      },
+      {
+        "title": "Keywords",
+        "body": "Intención real, no volumen inflado.",
+        "from": "#64D2FF",
+        "to": "#30D158"
+      },
+      {
+        "title": "Plan",
+        "body": "Qué cambiar hoy, esta semana y este mes.",
+        "from": "#5E5CE6",
+        "to": "#BF5AF2"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Marina G.",
+        "rating": 5,
+        "text": "Por fin una skill que no inventa “escribe más contenido”.",
+        "date": "12 sep"
+      },
+      {
+        "user": "Diego R.",
+        "rating": 5,
+        "text": "La usamos en 14 landings de clientes. Consistente.",
+        "date": "28 ago"
+      }
+    ]
+  },
+  {
+    "id": "code-review",
+    "name": "Code Review",
+    "subtitle": "Revisa PRs con el criterio de tu equipo",
+    "author": "Northwind",
+    "category": "Ingeniería",
+    "rating": 4.8,
+    "ratingsCount": 24610,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "none"
+    },
+    "description": "Aplica el estilo de review de tu repo: riesgos, tests faltantes, contratos de API y comentarios accionables. No un muro de nitpicks.",
+    "whatsNew": "Soporta checklists por carpeta y bloquea comentarios duplicados.",
+    "version": "3.1",
+    "size": "212 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#30D158",
+      "to": "#64D2FF",
+      "glyph": "</>"
+    },
+    "story": {
+      "image": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1600&q=80",
+      "kicker": "Para equipos",
+      "title": "Reviews que parecen de tu lead",
+      "subtitle": "Menos ruido. Más riesgos reales."
+    },
+    "screenshots": [
+      {
+        "title": "Diff",
+        "body": "Señala el riesgo, no el gusto personal.",
+        "from": "#30D158",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Checklist",
+        "body": "Tests, seguridad y contratos.",
+        "from": "#1C1C1E",
+        "to": "#30D158"
+      },
+      {
+        "title": "Comentario",
+        "body": "Sugerencia lista para pegar en el PR.",
+        "from": "#0A84FF",
+        "to": "#5E5CE6"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Luis P.",
+        "rating": 5,
+        "text": "Bajamos el ida y vuelta de reviews a la mitad.",
+        "date": "2 oct"
+      },
+      {
+        "user": "Aya K.",
+        "rating": 4,
+        "text": "Excelente en backend. En CSS todavía se pasa.",
+        "date": "18 sep"
+      }
+    ]
+  },
+  {
+    "id": "brand-designer",
+    "name": "Brand Designer",
+    "subtitle": "Sistemas visuales con criterio",
+    "author": "Atelier",
+    "category": "Diseño",
+    "rating": 4.7,
+    "ratingsCount": 8320,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "ChatGPT"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "full",
+      "Gemini": "partial",
+      "Codex": "none",
+      "Copilot": "none"
+    },
+    "description": "Define tipo, color, ritmo y componentes. El agente deja de improvisar paletas y sigue un sistema.",
+    "whatsNew": "Tokens exportables a CSS y Figma-friendly.",
+    "version": "1.8",
+    "size": "156 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#FF375F",
+      "to": "#FF9F0A",
+      "glyph": "Aa"
+    },
+    "screenshots": [
+      {
+        "title": "Sistema",
+        "body": "Color, tipo y radio en un lienzo.",
+        "from": "#FF375F",
+        "to": "#BF5AF2"
+      },
+      {
+        "title": "UI",
+        "body": "Botones y cards coherentes.",
+        "from": "#FF9F0A",
+        "to": "#FF375F"
+      },
+      {
+        "title": "Tokens",
+        "body": "Listos para pegar en el repo.",
+        "from": "#5E5CE6",
+        "to": "#FF9F0A"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Nora V.",
+        "rating": 5,
+        "text": "Se nota que hay ojo de diseño, no solo prompts.",
+        "date": "9 sep"
+      }
+    ]
+  },
+  {
+    "id": "legal-contracts",
+    "name": "Contratos",
+    "subtitle": "Revisa cláusulas con contexto",
+    "author": "Lex & Co.",
+    "category": "Legal",
+    "rating": 4.6,
+    "ratingsCount": 4190,
+    "price": "9,99 €",
+    "verified": true,
+    "agents": [
+      "Claude",
+      "ChatGPT",
+      "Gemini"
+    ],
+    "compatibility": {
+      "Claude": "full",
+      "ChatGPT": "full",
+      "Gemini": "full",
+      "Cursor": "partial",
+      "Codex": "none",
+      "Copilot": "none"
+    },
+    "description": "Marca riesgos, omisiones y lenguaje unilateral. No sustituye a un abogado: prepara una review humana más rápida.",
+    "whatsNew": "Plantillas de NDA, MSA y SOW en español.",
+    "version": "1.3",
+    "size": "240 KB",
+    "age": "17+",
+    "icon": {
+      "from": "#8E8E93",
+      "to": "#F2F2F7",
+      "glyph": "§"
+    },
+    "screenshots": [
+      {
+        "title": "Riesgo",
+        "body": "Rojo, ámbar y verde por cláusula.",
+        "from": "#636366",
+        "to": "#FF9F0A"
+      },
+      {
+        "title": "Redline",
+        "body": "Texto alternativo listo para negociar.",
+        "from": "#1C1C1E",
+        "to": "#8E8E93"
+      },
+      {
+        "title": "Resumen",
+        "body": "Una página para el cliente.",
+        "from": "#0A84FF",
+        "to": "#8E8E93"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Helena M.",
+        "rating": 5,
+        "text": "Ideal para un primer pase interno.",
+        "date": "21 ago"
+      }
+    ]
+  },
+  {
+    "id": "sales-closer",
+    "name": "Sales Closer",
+    "subtitle": "Follow-ups que no suenan a robot",
+    "author": "Quota",
+    "category": "Ventas",
+    "rating": 4.8,
+    "ratingsCount": 6740,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Claude",
+      "ChatGPT",
+      "Gemini",
+      "Cursor"
+    ],
+    "compatibility": {
+      "Claude": "full",
+      "ChatGPT": "full",
+      "Gemini": "full",
+      "Cursor": "partial",
+      "Codex": "none",
+      "Copilot": "none"
+    },
+    "description": "Escribe follow-ups a partir del contexto real del deal: objeciones, timeline y siguiente paso concreto.",
+    "whatsNew": "Tono por etapa: discovery, demo, negociación.",
+    "version": "2.0",
+    "size": "132 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#FF9F0A",
+      "to": "#FF375F",
+      "glyph": "↗"
+    },
+    "screenshots": [
+      {
+        "title": "Deal",
+        "body": "Contexto del comprador en 4 bullets.",
+        "from": "#FF9F0A",
+        "to": "#30D158"
+      },
+      {
+        "title": "Mail",
+        "body": "Corto, específico, con CTA único.",
+        "from": "#FF375F",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Secuencia",
+        "body": "Día 1, 3 y 7 sin repetir el pitch.",
+        "from": "#5E5CE6",
+        "to": "#FF9F0A"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Pablo S.",
+        "rating": 5,
+        "text": "Los mails dejan de parecer plantilla.",
+        "date": "30 sep"
+      }
+    ]
+  },
+  {
+    "id": "qa-playwright",
+    "name": "QA Playwright",
+    "subtitle": "Flujos E2E con criterio de producto",
+    "author": "Harbor",
+    "category": "Ingeniería",
+    "rating": 4.7,
+    "ratingsCount": 3910,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Codex",
+      "Copilot",
+      "Claude"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Gemini": "none"
+    },
+    "description": "Diseña tests por flujo de usuario, no por selector. Nombra bien, espera estados reales y evita tests frágiles.",
+    "whatsNew": "Plantillas para login, checkout y permisos.",
+    "version": "1.6",
+    "size": "198 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#5E5CE6",
+      "to": "#BF5AF2",
+      "glyph": "●"
+    },
+    "screenshots": [
+      {
+        "title": "Flujo",
+        "body": "Del click al assert que importa.",
+        "from": "#5E5CE6",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Flaky",
+        "body": "Detecta esperas mal puestas.",
+        "from": "#BF5AF2",
+        "to": "#FF375F"
+      },
+      {
+        "title": "Reporte",
+        "body": "Qué se cubre y qué no.",
+        "from": "#30D158",
+        "to": "#5E5CE6"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Iria T.",
+        "rating": 4,
+        "text": "Muy buena para armar la suite inicial.",
+        "date": "5 sep"
+      }
+    ]
+  },
+  {
+    "id": "support-desk",
+    "name": "Support Desk",
+    "subtitle": "Respuestas con la voz de tu marca",
+    "author": "Kindred",
+    "category": "Soporte",
+    "rating": 4.5,
+    "ratingsCount": 2880,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Claude",
+      "ChatGPT",
+      "Gemini"
+    ],
+    "compatibility": {
+      "Claude": "full",
+      "ChatGPT": "full",
+      "Gemini": "full",
+      "Cursor": "partial",
+      "Codex": "none",
+      "Copilot": "none"
+    },
+    "description": "Clasifica tickets, propone macros y mantiene el tono. Escala cuando hay reembolso, legal o enojo real.",
+    "whatsNew": "Detección de urgencia y clientes VIP.",
+    "version": "1.1",
+    "size": "121 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#64D2FF",
+      "to": "#30D158",
+      "glyph": "◎"
+    },
+    "screenshots": [
+      {
+        "title": "Inbox",
+        "body": "Prioridad humana, no FIFO ciego.",
+        "from": "#64D2FF",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Macro",
+        "body": "Respuesta editable, no enviada.",
+        "from": "#30D158",
+        "to": "#64D2FF"
+      },
+      {
+        "title": "Escalado",
+        "body": "Cuándo pasar a una persona.",
+        "from": "#FF9F0A",
+        "to": "#FF375F"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Camila D.",
+        "rating": 4,
+        "text": "Buena base. Hay que afinar el tono de marca.",
+        "date": "14 ago"
+      }
+    ]
+  },
+  {
+    "id": "finance-close",
+    "name": "Cierre Financiero",
+    "subtitle": "Mes cerrado sin drama",
+    "author": "Ledger",
+    "category": "Finanzas",
+    "rating": 4.6,
+    "ratingsCount": 1540,
+    "price": "14,99 €",
+    "verified": true,
+    "agents": [
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "compatibility": {
+      "Claude": "full",
+      "ChatGPT": "full",
+      "Cursor": "partial",
+      "Gemini": "partial",
+      "Codex": "none",
+      "Copilot": "none"
+    },
+    "description": "Checklist de close, anomalías y narrativa para el board. El agente pregunta lo que falta en vez de inventar cifras.",
+    "whatsNew": "Varianza mes contra mes en lenguaje de negocio.",
+    "version": "1.0",
+    "size": "176 KB",
+    "age": "17+",
+    "icon": {
+      "from": "#30D158",
+      "to": "#0A84FF",
+      "glyph": "$"
+    },
+    "screenshots": [
+      {
+        "title": "Close",
+        "body": "Qué falta para cerrar el mes.",
+        "from": "#30D158",
+        "to": "#1C1C1E"
+      },
+      {
+        "title": "Anomalía",
+        "body": "Gastos que no cuadran.",
+        "from": "#FF9F0A",
+        "to": "#30D158"
+      },
+      {
+        "title": "Board",
+        "body": "Un párrafo, no un Excel.",
+        "from": "#0A84FF",
+        "to": "#30D158"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Sofia L.",
+        "rating": 5,
+        "text": "Nos ahorra el domingo de cierre.",
+        "date": "1 oct"
+      }
+    ]
+  },
+  {
+    "id": "meeting-notes",
+    "name": "Meeting Notes",
+    "subtitle": "De la junta a los dueños",
+    "author": "Skill Store Labs",
+    "category": "Productividad",
+    "rating": 4.9,
+    "ratingsCount": 19120,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Claude",
+      "ChatGPT",
+      "Gemini",
+      "Cursor"
+    ],
+    "compatibility": {
+      "Claude": "full",
+      "ChatGPT": "full",
+      "Gemini": "full",
+      "Cursor": "full",
+      "Codex": "partial",
+      "Copilot": "partial"
+    },
+    "description": "Convierte una transcripción en decisiones, dueños y fechas. Cero “fue una buena reunión”.",
+    "whatsNew": "Exporta a issues y follow-ups por persona.",
+    "version": "2.2",
+    "size": "98 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#BF5AF2",
+      "to": "#0A84FF",
+      "glyph": "≡"
+    },
+    "screenshots": [
+      {
+        "title": "Notas",
+        "body": "Decisiones arriba, charla abajo.",
+        "from": "#BF5AF2",
+        "to": "#5E5CE6"
+      },
+      {
+        "title": "Dueños",
+        "body": "Cada acción tiene nombre.",
+        "from": "#0A84FF",
+        "to": "#BF5AF2"
+      },
+      {
+        "title": "Mail",
+        "body": "Resumen listo para el equipo.",
+        "from": "#64D2FF",
+        "to": "#BF5AF2"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Andrés F.",
+        "rating": 5,
+        "text": "La skill que más usamos, sin discusión.",
+        "date": "3 oct"
+      }
+    ]
+  },
+  {
+    "id": "a11y-audit",
+    "name": "Accesibilidad",
+    "subtitle": "UI que se puede usar de verdad",
+    "author": "Inclusive",
+    "category": "Diseño",
+    "rating": 4.8,
+    "ratingsCount": 2210,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Copilot": "full",
+      "Codex": "partial",
+      "ChatGPT": "partial",
+      "Gemini": "none"
+    },
+    "description": "Revisa contraste, foco, nombres accesibles y teclado. Propone el parche, no solo el hallazgo.",
+    "whatsNew": "Reglas WCAG 2.2 AA con ejemplos del propio código.",
+    "version": "1.4",
+    "size": "167 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0A84FF",
+      "to": "#30D158",
+      "glyph": "A+"
+    },
+    "screenshots": [
+      {
+        "title": "Hallazgos",
+        "body": "Severidad y criterio WCAG.",
+        "from": "#0A84FF",
+        "to": "#30D158"
+      },
+      {
+        "title": "Foco",
+        "body": "Orden de tab visible.",
+        "from": "#30D158",
+        "to": "#64D2FF"
+      },
+      {
+        "title": "Fix",
+        "body": "Diff listo para aplicar.",
+        "from": "#5E5CE6",
+        "to": "#0A84FF"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Eva N.",
+        "rating": 5,
+        "text": "Por fin una review de a11y accionable.",
+        "date": "19 sep"
+      }
+    ]
+  },
+  {
+    "id": "agency-voice",
+    "name": "Voz de Agencia",
+    "subtitle": "Así escribimos en este estudio",
+    "author": "Estudio Norte",
+    "category": "Equipos",
+    "rating": 5,
+    "ratingsCount": 48,
+    "price": "Privada",
+    "verified": true,
+    "private": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "ChatGPT"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "full",
+      "Gemini": "partial",
+      "Codex": "none",
+      "Copilot": "none"
+    },
+    "description": "El tono, las prohibiciones y los ejemplos reales de la agencia. No se publica. Solo el equipo.",
+    "whatsNew": "Añadimos 12 piezas ganadoras de 2026.",
+    "version": "0.9",
+    "size": "86 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#1C1C1E",
+      "to": "#8E8E93",
+      "glyph": "N"
+    },
+    "screenshots": [
+      {
+        "title": "Tono",
+        "body": "Qué suena a nosotros y qué no.",
+        "from": "#1C1C1E",
+        "to": "#8E8E93"
+      },
+      {
+        "title": "No",
+        "body": "Palabras prohibidas y clichés.",
+        "from": "#FF375F",
+        "to": "#1C1C1E"
+      },
+      {
+        "title": "Sí",
+        "body": "Piezas que ya funcionaron.",
+        "from": "#30D158",
+        "to": "#1C1C1E"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Equipo interno",
+        "rating": 5,
+        "text": "Los juniors ya no suenan genéricos.",
+        "date": "27 sep"
+      }
+    ]
+  },
+  {
+    "id": "pr-playbook",
+    "name": "Playbook de PRs",
+    "subtitle": "La forma en que mergeamos aquí",
+    "author": "Nimbus",
+    "category": "Equipos",
+    "rating": 4.9,
+    "ratingsCount": 112,
+    "price": "Privada",
+    "verified": true,
+    "private": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "partial"
+    },
+    "description": "Convenciones de ramas, tamaño de PR, tests mínimos y mensaje de merge de Nimbus.",
+    "whatsNew": "Regla nueva: no PRs de más de 400 líneas sin split.",
+    "version": "1.2",
+    "size": "74 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#5E5CE6",
+      "to": "#0A84FF",
+      "glyph": "P"
+    },
+    "screenshots": [
+      {
+        "title": "Reglas",
+        "body": "Lo no negociable del equipo.",
+        "from": "#5E5CE6",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Ejemplo",
+        "body": "Un PR bueno y uno malo.",
+        "from": "#0A84FF",
+        "to": "#1C1C1E"
+      },
+      {
+        "title": "Merge",
+        "body": "Mensaje listo al estilo Nimbus.",
+        "from": "#30D158",
+        "to": "#5E5CE6"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Tech lead",
+        "rating": 5,
+        "text": "El onboarding bajó de 2 semanas a 4 días.",
+        "date": "8 sep"
+      }
+    ]
+  },
+  {
+    "id": "frontend-design",
+    "name": "Frontend Design",
+    "subtitle": "UI que no parece plantilla",
+    "author": "Anthropic",
+    "category": "Diseño",
+    "rating": 4.9,
+    "ratingsCount": 950300,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "partial",
+      "Codex": "full",
+      "Gemini": "partial",
+      "Copilot": "full"
+    },
+    "description": "La skill oficial de Anthropic para dirección visual: tipografía, ritmo y decisiones que no se leen como un default de IA. Extraída de anthropics/skills.",
+    "whatsNew": "Traída desde el repo oficial de Anthropic.",
+    "version": "1.0",
+    "size": "24 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#D97757",
+      "to": "#1A1A1A",
+      "glyph": "Fd"
+    },
+    "story": {
+      "image": "https://images.unsplash.com/photo-1545235617-9465d2a55698?auto=format&fit=crop&w=1600&q=80",
+      "kicker": "De Anthropic",
+      "title": "La skill de diseño que sí tiene criterio",
+      "subtitle": "Oficial. 950 mil installs. No es un prompt genérico."
+    },
+    "screenshots": [
+      {
+        "title": "Dirección",
+        "body": "Una estética, no un gradiente más.",
+        "from": "#D97757",
+        "to": "#1A1A1A"
+      },
+      {
+        "title": "Tipo",
+        "body": "Escalas y peso con intención.",
+        "from": "#1A1A1A",
+        "to": "#D97757"
+      },
+      {
+        "title": "UI",
+        "body": "Componentes que no parecen plantilla.",
+        "from": "#0A84FF",
+        "to": "#D97757"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "skills.sh",
+        "rating": 5,
+        "text": "950 mil installs. La skill de diseño más usada del ecosistema.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "react-best-practices",
+    "name": "React Best Practices",
+    "subtitle": "Rendimiento React y Next de Vercel",
+    "author": "Vercel",
+    "category": "Ingeniería",
+    "rating": 4.9,
+    "ratingsCount": 767700,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Guías de performance de Vercel Engineering para React y Next.js: fetching, bundle, waterfalls y patrones que sí importan. Extraída de vercel-labs/agent-skills.",
+    "whatsNew": "Versión 1.0 oficial de Vercel.",
+    "version": "1.0.0",
+    "size": "416 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#000000",
+      "to": "#888888",
+      "glyph": "▲"
+    },
+    "story": {
+      "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&q=80",
+      "kicker": "De Vercel",
+      "title": "Las reglas que usa el equipo de React en Vercel",
+      "subtitle": "768 mil installs. Para cuando el agente escribe Next."
+    },
+    "screenshots": [
+      {
+        "title": "Fetch",
+        "body": "Sin waterfalls ni doble render.",
+        "from": "#000000",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Bundle",
+        "body": "Lo que no debe ir al cliente.",
+        "from": "#30D158",
+        "to": "#000000"
+      },
+      {
+        "title": "Review",
+        "body": "Señal de performance, no de gusto.",
+        "from": "#0A84FF",
+        "to": "#000000"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "skills.sh",
+        "rating": 5,
+        "text": "La skill de ingeniería web más instalada de Vercel.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "find-skills",
+    "name": "Find Skills",
+    "subtitle": "Encuentra e instala skills del ecosistema",
+    "author": "Vercel",
+    "category": "Productividad",
+    "rating": 4.8,
+    "ratingsCount": 3700000,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "La skill número 1 de skills.sh. Enseña al agente a buscar e instalar skills con `npx skills` cuando pides una capacidad nueva.",
+    "whatsNew": "Extraída de vercel-labs/skills.",
+    "version": "1.0",
+    "size": "8 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0A84FF",
+      "to": "#000000",
+      "glyph": "⌕"
+    },
+    "screenshots": [
+      {
+        "title": "Buscar",
+        "body": "Del pedido a un paquete real.",
+        "from": "#0A84FF",
+        "to": "#5E5CE6"
+      },
+      {
+        "title": "Filtrar",
+        "body": "Owners oficiales primero.",
+        "from": "#000000",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Instalar",
+        "body": "Un comando, no un copiar/pegar.",
+        "from": "#30D158",
+        "to": "#0A84FF"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "skills.sh",
+        "rating": 5,
+        "text": "3,7 millones de installs. El buscador del ecosistema.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "web-design-guidelines",
+    "name": "Web Design Guidelines",
+    "subtitle": "Audita UI contra las guías de Vercel",
+    "author": "Vercel",
+    "category": "Diseño",
+    "rating": 4.8,
+    "ratingsCount": 695800,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Revisa UI, accesibilidad y UX contra las Web Interface Guidelines de Vercel. Úsala cuando pides “revisa mi UI” o “audita el diseño”.",
+    "whatsNew": "Versión 1.0 oficial.",
+    "version": "1.0.0",
+    "size": "4 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#FF375F",
+      "to": "#000000",
+      "glyph": "Wg"
+    },
+    "screenshots": [
+      {
+        "title": "Audit",
+        "body": "Accesibilidad y ritmo, no solo color.",
+        "from": "#FF375F",
+        "to": "#000000"
+      },
+      {
+        "title": "UX",
+        "body": "Estados vacíos, foco y error.",
+        "from": "#0A84FF",
+        "to": "#FF375F"
+      },
+      {
+        "title": "Fix",
+        "body": "Hallazgo con el cambio encima.",
+        "from": "#30D158",
+        "to": "#000000"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "skills.sh",
+        "rating": 5,
+        "text": "696 mil installs. El checklist visual de Vercel.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "skill-creator",
+    "name": "Skill Creator",
+    "subtitle": "Crea y mejora skills con método",
+    "author": "Anthropic",
+    "category": "Productividad",
+    "rating": 4.8,
+    "ratingsCount": 397900,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "La skill oficial para escribir otras skills: estructura, descripción que dispara bien, evals y cómo no inflar el contexto.",
+    "whatsNew": "Del repo anthropics/skills.",
+    "version": "1.0",
+    "size": "248 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#D97757",
+      "to": "#5E5CE6",
+      "glyph": "Sc"
+    },
+    "screenshots": [
+      {
+        "title": "Estructura",
+        "body": "SKILL.md que el agente sí carga.",
+        "from": "#D97757",
+        "to": "#5E5CE6"
+      },
+      {
+        "title": "Trigger",
+        "body": "La description decide si se usa.",
+        "from": "#5E5CE6",
+        "to": "#D97757"
+      },
+      {
+        "title": "Eval",
+        "body": "Mide si la skill mejora el trabajo.",
+        "from": "#0A84FF",
+        "to": "#D97757"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "skills.sh",
+        "rating": 5,
+        "text": "398 mil installs. El manual de Anthropic para authors.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "composition-patterns",
+    "name": "Composition Patterns",
+    "subtitle": "APIs de componentes que escalan",
+    "author": "Vercel",
+    "category": "Ingeniería",
+    "rating": 4.8,
+    "ratingsCount": 372100,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Patrones de composición en React: compound components, render props, context y cambios de React 19. Para librerías y APIs reutilizables.",
+    "whatsNew": "Versión 1.0 oficial.",
+    "version": "1.0.0",
+    "size": "80 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#5E5CE6",
+      "to": "#000000",
+      "glyph": "{ }"
+    },
+    "screenshots": [
+      {
+        "title": "API",
+        "body": "Menos boolean props.",
+        "from": "#5E5CE6",
+        "to": "#000000"
+      },
+      {
+        "title": "React 19",
+        "body": "Lo que cambió y lo que no.",
+        "from": "#0A84FF",
+        "to": "#5E5CE6"
+      },
+      {
+        "title": "Lib",
+        "body": "Componentes que se pueden extender.",
+        "from": "#000000",
+        "to": "#5E5CE6"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "skills.sh",
+        "rating": 5,
+        "text": "372 mil installs. Architecture, no snippets sueltos.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "mcp-builder",
+    "name": "MCP Builder",
+    "subtitle": "Servidores MCP bien diseñados",
+    "author": "Anthropic",
+    "category": "Ingeniería",
+    "rating": 4.7,
+    "ratingsCount": 128000,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Guía oficial para crear servidores MCP en Python (FastMCP) o TypeScript. Tools claros, no un wrapper flojo de una API.",
+    "whatsNew": "Del repo anthropics/skills.",
+    "version": "1.0",
+    "size": "144 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#30D158",
+      "to": "#D97757",
+      "glyph": "Mc"
+    },
+    "screenshots": [
+      {
+        "title": "Tools",
+        "body": "Una herramienta, un trabajo.",
+        "from": "#30D158",
+        "to": "#D97757"
+      },
+      {
+        "title": "Python",
+        "body": "FastMCP sin teatro.",
+        "from": "#D97757",
+        "to": "#1C1C1E"
+      },
+      {
+        "title": "TS",
+        "body": "SDK oficial de MCP.",
+        "from": "#0A84FF",
+        "to": "#30D158"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Skill Store",
+        "rating": 5,
+        "text": "La base si vas a exponer un servicio al agente.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "webapp-testing",
+    "name": "Webapp Testing",
+    "subtitle": "Playwright para la app local",
+    "author": "Anthropic",
+    "category": "Ingeniería",
+    "rating": 4.7,
+    "ratingsCount": 98000,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Toolkit oficial de Anthropic para probar una web local con Playwright: UI, logs, screenshots y regresiones de frontend.",
+    "whatsNew": "Del repo anthropics/skills.",
+    "version": "1.0",
+    "size": "32 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#5E5CE6",
+      "to": "#30D158",
+      "glyph": "Pw"
+    },
+    "screenshots": [
+      {
+        "title": "Local",
+        "body": "Abre la app y comprueba el flujo.",
+        "from": "#5E5CE6",
+        "to": "#30D158"
+      },
+      {
+        "title": "Shot",
+        "body": "Captura el estado que falla.",
+        "from": "#30D158",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Log",
+        "body": "Consola incluida.",
+        "from": "#0A84FF",
+        "to": "#5E5CE6"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Skill Store",
+        "rating": 5,
+        "text": "Complementa QA Playwright con el toolkit de Anthropic.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "doc-coauthoring",
+    "name": "Doc Coauthoring",
+    "subtitle": "Specs y docs en un flujo",
+    "author": "Anthropic",
+    "category": "Productividad",
+    "rating": 4.7,
+    "ratingsCount": 74000,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "ChatGPT"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Flujo oficial para coescribir documentación, propuestas y specs: contexto, iteración y comprobar que el lector entiende.",
+    "whatsNew": "Del repo anthropics/skills.",
+    "version": "1.0",
+    "size": "16 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#8E8E93",
+      "to": "#D97757",
+      "glyph": "Dc"
+    },
+    "screenshots": [
+      {
+        "title": "Contexto",
+        "body": "Primero lo que el lector necesita.",
+        "from": "#8E8E93",
+        "to": "#D97757"
+      },
+      {
+        "title": "Iterar",
+        "body": "Una pasada, no un muro.",
+        "from": "#D97757",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Verificar",
+        "body": "¿Se entiende sin el autor?",
+        "from": "#0A84FF",
+        "to": "#8E8E93"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Skill Store",
+        "rating": 5,
+        "text": "La skill de escritura de Anthropic, no un lorem.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "react-native-skills",
+    "name": "React Native",
+    "subtitle": "Expo y móvil con criterio de Vercel",
+    "author": "Vercel",
+    "category": "Ingeniería",
+    "rating": 4.7,
+    "ratingsCount": 230700,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "Copilot"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Buenas prácticas de React Native y Expo: listas, animaciones, módulos nativos y performance móvil.",
+    "whatsNew": "Versión 1.0 oficial.",
+    "version": "1.0.0",
+    "size": "260 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#64D2FF",
+      "to": "#000000",
+      "glyph": "Rn"
+    },
+    "screenshots": [
+      {
+        "title": "Listas",
+        "body": "FlashList, no un map ciego.",
+        "from": "#64D2FF",
+        "to": "#000000"
+      },
+      {
+        "title": "Expo",
+        "body": "Módulos nativos sin magia.",
+        "from": "#000000",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Perf",
+        "body": "Lo que se siente lento en el teléfono.",
+        "from": "#0A84FF",
+        "to": "#64D2FF"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "skills.sh",
+        "rating": 5,
+        "text": "231 mil installs. El pack móvil de Vercel.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "vercel-optimize",
+    "name": "Vercel Optimize",
+    "subtitle": "Coste y velocidad en Vercel",
+    "author": "Vercel",
+    "category": "Ingeniería",
+    "rating": 4.7,
+    "ratingsCount": 110000,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "partial",
+      "Codex": "full",
+      "Gemini": "partial",
+      "Copilot": "partial"
+    },
+    "description": "Optimiza coste y performance de un proyecto desplegado en Vercel: invocaciones, caché, Fast Data Transfer y Core Web Vitals. Con métricas, no con opiniones.",
+    "whatsNew": "Versión 1.2.0 oficial.",
+    "version": "1.2.0",
+    "size": "1.1 MB",
+    "age": "12+",
+    "icon": {
+      "from": "#30D158",
+      "to": "#000000",
+      "glyph": "$"
+    },
+    "screenshots": [
+      {
+        "title": "Métricas",
+        "body": "Primero los números del proyecto.",
+        "from": "#30D158",
+        "to": "#000000"
+      },
+      {
+        "title": "Coste",
+        "body": "Qué ruta te está cobrando.",
+        "from": "#FF9F0A",
+        "to": "#30D158"
+      },
+      {
+        "title": "Plan",
+        "body": "Cambios rankeados y verificados.",
+        "from": "#000000",
+        "to": "#0A84FF"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Skill Store",
+        "rating": 5,
+        "text": "La skill de factura y latencia, del propio Vercel.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "deploy-to-vercel",
+    "name": "Deploy to Vercel",
+    "subtitle": "Despliega y dame el link",
+    "author": "Vercel",
+    "category": "Ingeniería",
+    "rating": 4.6,
+    "ratingsCount": 86000,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "partial",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Skill oficial para desplegar a Vercel: preview, producción y devolver la URL. Se dispara con “despliega esto” o “ponlo en el aire”.",
+    "whatsNew": "Versión 3.0.0 oficial.",
+    "version": "3.0.0",
+    "size": "36 KB",
+    "age": "12+",
+    "icon": {
+      "from": "#000000",
+      "to": "#30D158",
+      "glyph": "▲"
+    },
+    "screenshots": [
+      {
+        "title": "Preview",
+        "body": "Un link para el PR.",
+        "from": "#000000",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Prod",
+        "body": "Cuando pides “ponlo live”.",
+        "from": "#30D158",
+        "to": "#000000"
+      },
+      {
+        "title": "URL",
+        "body": "El resultado es el enlace, no un ensayo.",
+        "from": "#0A84FF",
+        "to": "#30D158"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Skill Store",
+        "rating": 5,
+        "text": "La skill de deploy más clara del catálogo de Vercel.",
+        "date": "Hoy"
+      }
+    ]
+  },
+  {
+    "id": "writing-guidelines",
+    "name": "Writing Guidelines",
+    "subtitle": "Voz y tono de la handbook de Vercel",
+    "author": "Vercel",
+    "category": "Productividad",
+    "rating": 4.6,
+    "ratingsCount": 64000,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex",
+      "ChatGPT"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "Codex": "full",
+      "Copilot": "full",
+      "ChatGPT": "partial",
+      "Gemini": "partial"
+    },
+    "description": "Revisa docs y prosa contra las Writing Guidelines de Vercel. Para “revisa este texto”, tono y handbook, no para copy de marketing vacío.",
+    "whatsNew": "Versión 1.0 oficial.",
+    "version": "1.0.0",
+    "size": "4 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#BF5AF2",
+      "to": "#000000",
+      "glyph": "Wr"
+    },
+    "screenshots": [
+      {
+        "title": "Tono",
+        "body": "Directo, como la handbook.",
+        "from": "#BF5AF2",
+        "to": "#000000"
+      },
+      {
+        "title": "Docs",
+        "body": "Menos adjetivo, más hecho.",
+        "from": "#000000",
+        "to": "#0A84FF"
+      },
+      {
+        "title": "Fix",
+        "body": "El párrafo reescrito, no un sermón.",
+        "from": "#0A84FF",
+        "to": "#BF5AF2"
+      }
+    ],
+    "reviews": [
+      {
+        "user": "Skill Store",
+        "rating": 5,
+        "text": "La pareja de Web Design Guidelines, para texto.",
+        "date": "Hoy"
+      }
+    ]
+  }
+]
