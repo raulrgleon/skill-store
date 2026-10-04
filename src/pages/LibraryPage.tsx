@@ -16,9 +16,9 @@ export function LibraryPage({ installed, locations, statusOf, onOpen, onGet, onE
   const owned = skills.filter((skill) => installed.includes(skill.id))
 
   return (
-    <div className="mx-auto max-w-[720px] px-5 pt-6 pb-10">
-      <h1 className="text-[34px] font-bold tracking-[-1.2px]">Biblioteca</h1>
-      <p className="mt-1 text-[15px] text-mute">Las skills que ya están en tus agentes.</p>
+    <div className="mx-auto max-w-[880px] px-5 pt-8 pb-12">
+      <h1 className="display text-[40px]">Biblioteca</h1>
+      <p className="mt-2 max-w-[42ch] text-[16px] leading-relaxed text-mute">Las skills que ya están en tus agentes.</p>
 
       {owned.length === 0 ? (
         <div className="mt-16 text-center">
@@ -29,7 +29,7 @@ export function LibraryPage({ installed, locations, statusOf, onOpen, onGet, onE
           <button
             type="button"
             onClick={onExplore}
-            className="mt-5 rounded-full bg-blue px-5 py-2 text-[14px] font-bold text-white"
+            className="mt-5 border border-blue bg-blue px-4 py-2 text-[15px] text-white"
           >
             Explorar tienda
           </button>

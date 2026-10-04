@@ -1,7 +1,7 @@
-import { StoryCard } from '../components/StoryCard'
+import { GetButton } from '../components/GetButton'
+import { SkillIcon } from '../components/SkillIcon'
 import { SkillRow } from '../components/SkillRow'
 import { skills } from '../data/skills'
-import { todayLabel } from '../lib/format'
 
 type TodayPageProps = {
   statusOf: (id: string) => 'idle' | 'busy' | 'installed'
@@ -14,7 +14,8 @@ export function TodayPage({ statusOf, onOpen, onGet, onExplore }: TodayPageProps
   const stories = skills.filter((skill) => skill.story)
   const publicSkills = skills.filter((skill) => !skill.private)
   const official = publicSkills.filter((skill) => skill.author === 'Anthropic' || skill.author === 'Vercel')
-  const featured = official.slice(0, 8)
+  const lead = stories[0] ?? official[0]
+  const featured = official.filter((skill) => skill.id !== lead?.id).slice(0, 8)
   const forCursor = publicSkills.filter((skill) => skill.compatibility.Cursor === 'full').slice(0, 10)
   const verified = publicSkills.filter(
     (skill) => skill.verified && skill.author !== 'Anthropic' && skill.author !== 'Vercel',
@@ -22,28 +23,25 @@ export function TodayPage({ statusOf, onOpen, onGet, onExplore }: TodayPageProps
   const work = publicSkills.filter((skill) => ['Marketing', 'Ventas', 'Legal', 'Finanzas'].includes(skill.category))
 
   return (
-    <div className="mx-auto max-w-[1080px] pb-10">
-      <div className="px-5 pt-6">
-        <p className="text-[13px] font-semibold tracking-[0.6px] text-mute uppercase">
-          {todayLabel()}
-        </p>
-        <h1 className="text-[34px] font-bold tracking-[-1.2px]">Hoy</h1>
-      </div>
-
-      <div className="mt-4 grid gap-5 px-5 lg:grid-cols-2">
-        {stories.map((skill, index) => (
-          <StoryCard
-            key={skill.id}
-            skill={skill}
-            large={index === 0}
-            onOpen={() => onOpen(skill.id)}
-          />
-        ))}
-      </div>
+    <div className="mx-auto max-w-[880px] px-5 pt-8 pb-12">
+      {lead ? (
+        <section className="grid items-center gap-6 border-b border-line pb-8 sm:grid-cols-[168px_1fr]">
+          <button type="button" onClick={() => onOpen(lead.id)} className="justify-self-start">
+            <SkillIcon skill={lead} size={168} />
+          </button>
+          <div className="max-w-[46ch]">
+            <h1 className="display text-[40px] leading-[1.05] sm:text-[48px]">{lead.name}</h1>
+            <p className="mt-3 text-[17px] leading-relaxed text-mute">{lead.subtitle}</p>
+            <div className="mt-5">
+              <GetButton price={lead.price} status={statusOf(lead.id)} onClick={() => onGet(lead.id)} />
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <SkillRow
         title="Oficiales"
-        subtitle="Extraídas de Anthropic, Vercel y skills.sh"
+        subtitle="Escritas por Anthropic y por Vercel."
         skills={featured}
         statusOf={statusOf}
         onOpen={onOpen}
@@ -52,7 +50,7 @@ export function TodayPage({ statusOf, onOpen, onGet, onExplore }: TodayPageProps
       />
       <SkillRow
         title="Listas para Cursor"
-        subtitle="Instalación en un toque"
+        subtitle="Cursor las carga desde tu carpeta de skills."
         skills={forCursor}
         statusOf={statusOf}
         onOpen={onOpen}

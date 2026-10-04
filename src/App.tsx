@@ -109,7 +109,7 @@ export default function App() {
   const installedIds = Object.keys(installed)
 
   return (
-    <div className="min-h-svh bg-black pb-16 md:pb-0">
+    <div className="min-h-svh bg-paper pb-20 md:pb-0">
       <StoreHeader
         tab={tab}
         query={query}

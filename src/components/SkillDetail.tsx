@@ -14,7 +14,7 @@ const compatibilityLabel = {
 const compatibilityClass = {
   full: 'bg-[#30d158]/15 text-[#30d158]',
   partial: 'bg-[#ff9f0a]/15 text-[#ff9f0a]',
-  none: 'bg-white/6 text-mute',
+  none: 'bg-card-2 text-mute',
 } as const
 
 const agents: Agent[] = ['Cursor', 'Claude', 'ChatGPT', 'Codex', 'Gemini', 'Copilot']
@@ -30,27 +30,27 @@ type SkillDetailProps = {
 
 export function SkillDetail({ skill, status, installedOn, onClose, onGet, onRemove }: SkillDetailProps) {
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black">
-      <div className="frost sticky top-0 z-10 flex items-center justify-between px-4 py-3 hairline">
-        <button type="button" onClick={onClose} className="text-[17px] font-semibold text-blue">
-          ← Tienda
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-paper">
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-line bg-paper px-4 py-3">
+        <button type="button" onClick={onClose} className="text-[16px] text-blue">
+          Volver a la tienda
         </button>
         <GetButton price={skill.price} status={status} onClick={onGet} />
       </div>
 
-      <div className="mx-auto max-w-[720px] px-5 pt-6 pb-24 rise">
+      <div className="mx-auto max-w-[720px] px-5 pt-8 pb-24">
         <div className="flex items-start gap-4">
           <SkillIcon skill={skill} size={112} />
           <div className="min-w-0 pt-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-[28px] leading-none font-bold tracking-[-0.8px]">{skill.name}</h1>
+              <h1 className="display text-[36px] leading-none">{skill.name}</h1>
               {skill.verified ? (
                 <span className="rounded-full bg-[#30d158]/15 px-2 py-0.5 text-[11px] font-bold text-[#30d158]">
                   Verificada
                 </span>
               ) : null}
               {skill.private ? (
-                <span className="rounded-full bg-white/8 px-2 py-0.5 text-[11px] font-bold text-mute">
+                <span className="border border-line px-2 py-0.5 text-[12px] text-mute">
                   Privada
                 </span>
               ) : null}
@@ -60,7 +60,7 @@ export function SkillDetail({ skill, status, installedOn, onClose, onGet, onRemo
           </div>
         </div>
 
-        <dl className="mt-6 grid grid-cols-4 gap-2 border-y border-white/8 py-4 text-center">
+        <dl className="mt-6 grid grid-cols-4 gap-2 border-y border-line py-4 text-center">
           <div>
             <dt className="text-[11px] text-mute">{formatCount(skill.ratingsCount)} valoraciones</dt>
             <dd className="mt-1 text-[20px] font-bold tracking-tight">{skill.rating.toFixed(1)}</dd>
@@ -90,16 +90,16 @@ export function SkillDetail({ skill, status, installedOn, onClose, onGet, onRemo
         </dl>
 
         <section className="mt-6">
-          <h2 className="text-[20px] font-bold tracking-[-0.4px]">Compatibilidad</h2>
+          <h2 className="display text-[26px]">Compatibilidad</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {agents.map((agent) => {
               const level = skill.compatibility[agent] ?? 'none'
               return (
                 <span
                   key={agent}
-                  className={`rounded-full px-3 py-1 text-[12px] font-semibold ${compatibilityClass[level]}`}
+                  className={`border border-line px-2.5 py-1 text-[13px] ${compatibilityClass[level]}`}
                 >
-                  {agent} · {compatibilityLabel[level]}
+                  {agent}, {compatibilityLabel[level]}
                 </span>
               )
             })}
@@ -122,21 +122,21 @@ export function SkillDetail({ skill, status, installedOn, onClose, onGet, onRemo
         </section>
 
         <section className="mt-8">
-          <h2 className="text-[20px] font-bold tracking-[-0.4px]">Descripción</h2>
-          <p className="mt-2 text-[15px] leading-relaxed text-white/80">{skill.description}</p>
+          <h2 className="display text-[26px]">Descripción</h2>
+          <p className="mt-2 max-w-[62ch] text-[16px] leading-relaxed">{skill.description}</p>
         </section>
 
         <section className="mt-8">
-          <h2 className="text-[20px] font-bold tracking-[-0.4px]">Novedades</h2>
-          <p className="mt-1 text-[13px] text-mute">Versión {skill.version}</p>
-          <p className="mt-2 text-[15px] leading-relaxed text-white/80">{skill.whatsNew}</p>
+          <h2 className="display text-[26px]">Novedades</h2>
+          <p className="mt-1 text-[14px] text-mute">Versión {skill.version}</p>
+          <p className="mt-2 max-w-[62ch] text-[16px] leading-relaxed">{skill.whatsNew}</p>
         </section>
 
         <section className="mt-8">
-          <h2 className="text-[20px] font-bold tracking-[-0.4px]">Valoraciones y reseñas</h2>
+          <h2 className="display text-[26px]">Valoraciones</h2>
           <div className="mt-3 space-y-4">
             {skill.reviews.map((review) => (
-              <article key={review.user} className="rounded-2xl bg-card p-4">
+              <article key={review.user} className="border-b border-line pb-4">
                 <div className="flex items-center justify-between">
                   <p className="text-[14px] font-semibold">{review.user}</p>
                   <p className="text-[12px] text-mute">{review.date}</p>
@@ -148,15 +148,15 @@ export function SkillDetail({ skill, status, installedOn, onClose, onGet, onRemo
                     </span>
                   ))}
                 </p>
-                <p className="mt-2 text-[14px] text-white/80">{review.text}</p>
+                <p className="mt-2 max-w-[62ch] text-[15px] leading-relaxed">{review.text}</p>
               </article>
             ))}
           </div>
         </section>
 
         <section className="mt-8">
-          <h2 className="text-[20px] font-bold tracking-[-0.4px]">Información</h2>
-          <dl className="mt-3 divide-y divide-white/8 text-[14px]">
+          <h2 className="display text-[26px]">Información</h2>
+          <dl className="mt-3 divide-y divide-line text-[15px]">
             <div className="flex justify-between py-3">
               <dt className="text-mute">Proveedor</dt>
               <dd>{skill.author}</dd>

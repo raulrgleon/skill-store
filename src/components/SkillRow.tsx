@@ -1,5 +1,5 @@
 import type { Skill } from '../types'
-import { SkillCard } from './SkillCard'
+import { SkillListItem } from './SkillListItem'
 
 type SkillRowProps = {
   title: string
@@ -15,24 +15,25 @@ export function SkillRow({ title, subtitle, skills, statusOf, onOpen, onGet, onS
   if (skills.length === 0) return null
 
   return (
-    <section className="mt-8">
-      <div className="mb-3 flex items-end justify-between px-5">
+    <section className="mt-10">
+      <div className="mb-1 flex items-baseline justify-between gap-4">
         <div>
-          <h3 className="text-[22px] font-bold tracking-[-0.6px]">{title}</h3>
-          {subtitle ? <p className="text-[13px] text-mute">{subtitle}</p> : null}
+          <h2 className="display text-[26px]">{title}</h2>
+          {subtitle ? <p className="mt-1 max-w-[48ch] text-[15px] leading-snug text-mute">{subtitle}</p> : null}
         </div>
         {onSeeAll ? (
-          <button type="button" onClick={onSeeAll} className="text-[15px] font-semibold text-blue">
-            Ver todo
+          <button type="button" onClick={onSeeAll} className="shrink-0 text-[15px] text-blue">
+            Ver todas
           </button>
         ) : null}
       </div>
-      <div className="no-scrollbar flex gap-4 overflow-x-auto px-5 pb-1">
-        {skills.map((skill) => (
-          <SkillCard
+      <div>
+        {skills.map((skill, index) => (
+          <SkillListItem
             key={skill.id}
             skill={skill}
             status={statusOf(skill.id)}
+            last={index === skills.length - 1}
             onOpen={() => onOpen(skill.id)}
             onGet={() => onGet(skill.id)}
           />

@@ -7,7 +7,7 @@ type GetButtonProps = {
 }
 
 export function GetButton({ price, status, onClick }: GetButtonProps) {
-  const label = status === 'installed' ? 'ABIERTA' : price === 'Gratis' || price === 'Privada' ? 'OBTENER' : price
+  const label = status === 'installed' ? 'Abierta' : price === 'Gratis' || price === 'Privada' ? 'Obtener' : price
 
   return (
     <button

@@ -29,9 +29,9 @@ export function InstallSheet({ skill, homes, busy, error, onClose, onInstall }: 
 
   return (
     <div className="fixed inset-0 z-60 flex items-end justify-center sm:items-center">
-      <button type="button" className="absolute inset-0 bg-black/60" onClick={onClose} aria-label="Cerrar" />
-      <div className="relative w-full max-w-[440px] rounded-t-[22px] bg-card p-5 pb-8 sm:rounded-[22px]">
-        <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/15 sm:hidden" />
+      <button type="button" className="absolute inset-0 bg-ink/40" onClick={onClose} aria-label="Cerrar" />
+      <div className="relative w-full max-w-[440px] border border-line bg-card p-5 pb-8 sm:max-h-[90vh]">
+        <div className="mx-auto mb-4 h-1 w-10 bg-line sm:hidden" />
         <div className="flex items-center gap-3">
           <SkillIcon skill={skill} size={52} />
           <div>
@@ -50,15 +50,15 @@ export function InstallSheet({ skill, homes, busy, error, onClose, onInstall }: 
             return (
               <label
                 key={option.id}
-                className={`flex cursor-pointer items-center gap-3 rounded-2xl px-3 py-3 ${
-                  checked ? 'bg-white/8' : 'bg-white/4'
+                className={`flex cursor-pointer items-center gap-3 border px-3 py-3 ${
+                  checked ? 'border-blue bg-card-2' : 'border-line bg-card'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggle(option.id)}
-                  className="size-4 accent-[#0a84ff]"
+                  className="size-4 accent-[#1e3a5f]"
                 />
                 <div className="min-w-0 flex-1">
                   <p className="text-[15px] font-semibold">
@@ -86,7 +86,7 @@ export function InstallSheet({ skill, homes, busy, error, onClose, onInstall }: 
           <button
             type="button"
             onClick={onClose}
-            className="h-11 flex-1 rounded-full bg-white/8 text-[15px] font-bold"
+            className="h-11 flex-1 border border-line text-[15px]"
           >
             Cancelar
           </button>
@@ -94,9 +94,9 @@ export function InstallSheet({ skill, homes, busy, error, onClose, onInstall }: 
             type="button"
             disabled={busy || selected.length === 0}
             onClick={() => onInstall(selected)}
-            className="h-11 flex-1 rounded-full bg-blue text-[15px] font-bold text-white disabled:opacity-40"
+            className="h-11 flex-1 bg-blue text-[15px] text-white disabled:opacity-40"
           >
-            {busy ? 'Instalando…' : `Obtener${selected.length ? ` · ${selected.map((id) => TARGET_LABEL[id]).join(', ')}` : ''}`}
+            {busy ? 'Instalando…' : selected.length ? `Instalar en ${selected.map((id) => TARGET_LABEL[id]).join(', ')}` : 'Elige un agente'}
           </button>
         </div>
       </div>

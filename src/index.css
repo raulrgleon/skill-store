@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Segoe UI", system-ui, sans-serif;
-  --color-ink: #f5f5f7;
-  --color-mute: #8e8e93;
-  --color-dim: #636366;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-card: #1c1c1e;
-  --color-card-2: #2c2c2e;
-  --color-blue: #0a84ff;
-  --color-blue-2: #409cff;
+  --font-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-serif: "Literata", "Iowan Old Style", Palatino, serif;
+  --color-ink: #1a2228;
+  --color-mute: #5c6a73;
+  --color-dim: #7b8790;
+  --color-line: #d5dee4;
+  --color-card: #ffffff;
+  --color-card-2: #e7eef2;
+  --color-blue: #1e3a5f;
+  --color-blue-2: #2c5282;
+  --color-paper: #eef2f4;
 }
 
 * {
@@ -25,8 +26,8 @@ body,
 
 body {
   margin: 0;
-  background: #000;
-  color: #f5f5f7;
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
@@ -34,6 +35,17 @@ body {
 button,
 input {
   font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 560;
+  letter-spacing: -0.03em;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -45,55 +57,34 @@ input {
   scrollbar-width: none;
 }
 
-.story-scrim {
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.05) 0%,
-    rgba(0, 0, 0, 0.15) 42%,
-    rgba(0, 0, 0, 0.78) 100%
-  );
-}
-
-.hairline {
-  box-shadow: inset 0 -0.5px 0 rgba(255, 255, 255, 0.12);
-}
-
-.frost {
-  background: rgba(12, 12, 12, 0.72);
-  backdrop-filter: saturate(180%) blur(28px);
-  -webkit-backdrop-filter: saturate(180%) blur(28px);
-}
-
 .get-btn {
-  min-width: 86px;
-  height: 28px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 999px;
-  background: #0a84ff;
-  color: white;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: -0.08px;
+  min-width: 92px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--color-blue);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-blue);
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .get-btn:hover {
-  background: #409cff;
+  background: #e7eef6;
 }
 
 .get-btn.is-installed {
-  background: rgba(255, 255, 255, 0.1);
-  color: #0a84ff;
+  border-color: #8aa394;
+  color: #2a5c3e;
+  background: transparent;
 }
 
 .get-btn.is-busy {
-  width: 28px;
-  min-width: 28px;
+  width: 32px;
+  min-width: 32px;
   padding: 0;
-  background: transparent;
   color: transparent;
-  box-shadow: inset 0 0 0 2px #0a84ff;
   pointer-events: none;
   position: relative;
 }
@@ -101,10 +92,10 @@ input {
 .get-btn.is-busy::after {
   content: "";
   position: absolute;
-  inset: 3px;
-  border-radius: 999px;
+  inset: 6px;
+  border-radius: 50%;
   border: 2px solid transparent;
-  border-top-color: #0a84ff;
+  border-top-color: var(--color-blue);
   animation: spin 0.7s linear infinite;
 }
 
@@ -114,26 +105,17 @@ input {
   }
 }
 
-@keyframes rise {
-  from {
-    transform: translateY(16px);
-    opacity: 0;
+@media (prefers-reduced-motion: reduce) {
+  .get-btn.is-busy::after {
+    animation: none;
+    border-color: var(--color-blue);
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.rise {
-  animation: rise 0.45s ease both;
 }
 
 .stars {
-  letter-spacing: 1px;
-  color: #8e8e93;
+  color: #b7c2c9;
 }
 
 .stars .on {
-  color: #f5f5f7;
+  color: var(--color-ink);
 }

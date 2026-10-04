@@ -28,18 +28,20 @@ export function ExplorePage({ query, statusOf, onOpen, onGet }: ExplorePageProps
   }, [agent, category, query])
 
   return (
-    <div className="mx-auto max-w-[720px] px-5 pt-6 pb-10">
-      <h1 className="text-[34px] font-bold tracking-[-1.2px]">Explorar</h1>
-      <p className="mt-1 text-[15px] text-mute">Busca por oficio o por la IA que usas.</p>
+    <div className="mx-auto max-w-[880px] px-5 pt-8 pb-12">
+      <h1 className="display text-[40px]">Explorar</h1>
+      <p className="mt-2 max-w-[42ch] text-[16px] leading-relaxed text-mute">
+        Filtra por oficio o por el agente donde la vas a usar.
+      </p>
 
-      <div className="no-scrollbar mt-5 flex gap-2 overflow-x-auto pb-1">
+      <div className="no-scrollbar mt-6 flex gap-2 overflow-x-auto pb-1">
         {['Todas', ...categories.filter((item) => item.id !== 'Equipos').map((item) => item.id)].map((item) => (
           <button
             key={item}
             type="button"
             onClick={() => setCategory(item)}
-            className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap ${
-              category === item ? 'bg-white text-black' : 'bg-white/8 text-white'
+            className={`border px-3 py-1.5 text-[14px] whitespace-nowrap ${
+              category === item ? 'border-ink bg-ink text-paper' : 'border-line bg-card text-ink'
             }`}
           >
             {item}
@@ -47,14 +49,14 @@ export function ExplorePage({ query, statusOf, onOpen, onGet }: ExplorePageProps
         ))}
       </div>
 
-      <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
+      <div className="no-scrollbar mt-2 flex gap-2 overflow-x-auto pb-1">
         {['Todas', ...agents].map((item) => (
           <button
             key={item}
             type="button"
             onClick={() => setAgent(item)}
-            className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap ${
-              agent === item ? 'bg-blue text-white' : 'bg-white/8 text-white'
+            className={`border px-3 py-1.5 text-[14px] whitespace-nowrap ${
+              agent === item ? 'border-blue bg-blue text-white' : 'border-line bg-card text-ink'
             }`}
           >
             {item}
