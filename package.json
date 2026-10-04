@@ -11,8 +11,13 @@
     "skillstore": "node --experimental-strip-types cli/skillstore.ts"
   },
   "dependencies": {
+    "framer-motion": "^14.0.0",
+    "geist": "^1.7.2",
+    "lucide-react": "^1.51.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

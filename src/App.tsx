@@ -1,178 +1,129 @@
-import { useEffect, useMemo, useState } from 'react'
-import { BottomNav } from './components/BottomNav'
-import { InstallSheet } from './components/InstallSheet'
-import { SkillDetail } from './components/SkillDetail'
-import { StoreHeader } from './components/StoreHeader'
-import { Toast } from './components/Toast'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { Header } from './components/Header'
 import { skills } from './data/skills'
-import { fetchInstalled, installSkill, uninstallSkill, type InstallTarget, type InstalledMap } from './lib/api'
-import { formatTargets } from './lib/targets'
-import { ExplorePage } from './pages/ExplorePage'
+import { RouterProvider, useRouter } from './lib/router'
+import { AuthorPage } from './pages/AuthorPage'
+import { BrowsePage } from './pages/BrowsePage'
+import { HomePage } from './pages/HomePage'
 import { LibraryPage } from './pages/LibraryPage'
+import { SkillPage } from './pages/SkillPage'
+import { SubmitPage } from './pages/SubmitPage'
 import { TeamsPage } from './pages/TeamsPage'
-import { TodayPage } from './pages/TodayPage'
-import type { StoreTab } from './types'
+import { StoreProvider } from './store'
+import { Button } from './ui/Button'
+import { CommandPalette } from './ui/CommandPalette'
 
-const fallbackHomes: Record<InstallTarget, string> = {
-  cursor: '~/.cursor/skills',
-  claude: '~/.claude/skills',
-  codex: '~/.codex/skills',
+function routeKey(route: ReturnType<typeof useRouter>['route']) {
+  if (route.page === 'skill') return `skill:${route.id}`
+  if (route.page === 'author') return `author:${route.author}`
+  return route.page
 }
 
-export default function App() {
-  const [tab, setTab] = useState<StoreTab>('hoy')
-  const [query, setQuery] = useState('')
-  const [selectedId, setSelectedId] = useState<string | null>(null)
-  const [pendingId, setPendingId] = useState<string | null>(null)
-  const [busy, setBusy] = useState<string[]>([])
-  const [installed, setInstalled] = useState<InstalledMap>({})
-  const [homes, setHomes] = useState(fallbackHomes)
-  const [error, setError] = useState<string | null>(null)
-  const [toast, setToast] = useState<string | null>(null)
+function titleFor(route: ReturnType<typeof useRouter>['route']) {
+  if (route.page === 'browse') return 'Explorar · Skill Store'
+  if (route.page === 'library') return 'Biblioteca · Skill Store'
+  if (route.page === 'teams') return 'Equipos · Skill Store'
+  if (route.page === 'submit') return 'Publicar · Skill Store'
+  if (route.page === 'skill') {
+    const skill = skills.find((item) => item.id === route.id)
+    return skill ? `${skill.name} · Skill Store` : 'Skill Store'
+  }
+  if (route.page === 'author') return `${route.author} · Skill Store`
+  if (route.page === 'missing') return 'No encontrada · Skill Store'
+  return 'Skill Store'
+}
 
-  const selected = useMemo(
-    () => skills.find((skill) => skill.id === selectedId) ?? null,
-    [selectedId],
-  )
-  const pending = useMemo(
-    () => skills.find((skill) => skill.id === pendingId) ?? null,
-    [pendingId],
+function Shell() {
+  const router = useRouter()
+  const reduce = useReducedMotion()
+  const [palette, setPalette] = useState(false)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() =>
+    document.documentElement.classList.contains('dark') ? 'dark' : 'light',
   )
 
   useEffect(() => {
-    fetchInstalled()
-      .then((data) => {
-        setInstalled(data.installed)
-        setHomes(data.homes)
-      })
-      .catch(() => {
-        setToast('Reinicia npm run dev para activar el instalador.')
-      })
+    function onKey(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        setPalette(true)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [])
 
   useEffect(() => {
-    if (!toast) return
-    const timer = window.setTimeout(() => setToast(null), 3200)
-    return () => window.clearTimeout(timer)
-  }, [toast])
+    document.title = titleFor(router.route)
+    window.scrollTo(0, 0)
+  }, [router.route])
 
-  function statusOf(id: string) {
-    if (busy.includes(id)) return 'busy'
-    if (installed[id]?.length) return 'installed'
-    return 'idle'
+  function toggleTheme() {
+    const next = theme === 'dark' ? 'light' : 'dark'
+    setTheme(next)
+    document.documentElement.classList.toggle('dark', next === 'dark')
+    document.documentElement.style.colorScheme = next
+    localStorage.setItem('skillstore-theme', next)
   }
 
-  function handleGet(id: string) {
-    if (busy.includes(id)) return
-    if (installed[id]?.length) {
-      setSelectedId(id)
-      return
-    }
-    setError(null)
-    setPendingId(id)
-  }
-
-  async function confirmInstall(targets: InstallTarget[]) {
-    if (!pendingId) return
-    const id = pendingId
-    setBusy((current) => [...current, id])
-    setError(null)
-    try {
-      const result = await installSkill(id, targets)
-      setInstalled((current) => ({ ...current, [id]: result.targets }))
-      setPendingId(null)
-      setToast(`Instalada en ${formatTargets(result.targets)}`)
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'No se pudo instalar')
-    } finally {
-      setBusy((current) => current.filter((item) => item !== id))
-    }
-  }
-
-  async function handleRemove(id: string) {
-    setBusy((current) => [...current, id])
-    try {
-      await uninstallSkill(id)
-      setInstalled((current) => {
-        const next = { ...current }
-        delete next[id]
-        return next
-      })
-      setToast('Skill quitada de tus agentes')
-    } catch (reason) {
-      setToast(reason instanceof Error ? reason.message : 'No se pudo quitar')
-    } finally {
-      setBusy((current) => current.filter((item) => item !== id))
-    }
-  }
-
-  const installedIds = Object.keys(installed)
+  const page = (() => {
+    const route = router.route
+    if (route.page === 'home') return <HomePage onSearch={() => setPalette(true)} />
+    if (route.page === 'browse') return <BrowsePage />
+    if (route.page === 'skill') return <SkillPage id={route.id} />
+    if (route.page === 'author') return <AuthorPage author={route.author} />
+    if (route.page === 'submit') return <SubmitPage />
+    if (route.page === 'library') return <LibraryPage />
+    if (route.page === 'teams') return <TeamsPage />
+    return (
+      <div className="mx-auto max-w-[1200px] px-5 py-16">
+        <h1 className="text-[32px] font-medium tracking-tight">Esa página no existe</h1>
+        <Button className="mt-6" variant="secondary" onClick={() => router.navigate('/')}>
+          Ir al inicio
+        </Button>
+      </div>
+    )
+  })()
 
   return (
-    <div className="min-h-svh bg-paper pb-20 md:pb-0">
-      <StoreHeader
-        tab={tab}
-        query={query}
-        onTab={setTab}
-        onQuery={(value) => {
-          setQuery(value)
-          if (value) setTab('explorar')
-        }}
-      />
-
-      {tab === 'hoy' ? (
-        <TodayPage
-          statusOf={statusOf}
-          onOpen={setSelectedId}
-          onGet={handleGet}
-          onExplore={() => setTab('explorar')}
-        />
-      ) : null}
-
-      {tab === 'explorar' ? (
-        <ExplorePage query={query} statusOf={statusOf} onOpen={setSelectedId} onGet={handleGet} />
-      ) : null}
-
-      {tab === 'equipos' ? (
-        <TeamsPage statusOf={statusOf} onOpen={setSelectedId} onGet={handleGet} />
-      ) : null}
-
-      {tab === 'biblioteca' ? (
-        <LibraryPage
-          installed={installedIds}
-          locations={installed}
-          statusOf={statusOf}
-          onOpen={setSelectedId}
-          onGet={handleGet}
-          onExplore={() => setTab('explorar')}
-        />
-      ) : null}
-
-      <BottomNav tab={tab} onTab={setTab} />
-
-      {selected ? (
-        <SkillDetail
-          skill={selected}
-          status={statusOf(selected.id)}
-          installedOn={installed[selected.id]}
-          onClose={() => setSelectedId(null)}
-          onGet={() => handleGet(selected.id)}
-          onRemove={() => handleRemove(selected.id)}
-        />
-      ) : null}
-
-      {pending ? (
-        <InstallSheet
-          skill={pending}
-          homes={homes}
-          busy={busy.includes(pending.id)}
-          error={error}
-          onClose={() => setPendingId(null)}
-          onInstall={confirmInstall}
-        />
-      ) : null}
-
-      {toast ? <Toast message={toast} /> : null}
+    <div className="min-h-svh bg-canvas text-ink">
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-80 focus:rounded-[10px] focus:bg-surface focus:px-3 focus:py-2"
+      >
+        Saltar al contenido
+      </a>
+      <Header theme={theme} onTheme={toggleTheme} onSearch={() => setPalette(true)} />
+      <main id="contenido">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={routeKey(router.route)}
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduce ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: reduce ? 0 : 0.18, ease: 'easeOut' }}
+          >
+            {page}
+          </motion.div>
+        </AnimatePresence>
+      </main>
+      <footer className="border-t border-line">
+        <div className="mx-auto flex max-w-[1200px] flex-col gap-1 px-5 py-8 text-[13px] text-mute sm:flex-row sm:items-center sm:justify-between">
+          <p>Skill Store</p>
+          <p>Instalación local en Cursor, Claude y Codex.</p>
+        </div>
+      </footer>
+      <CommandPalette open={palette} onClose={() => setPalette(false)} />
     </div>
+  )
+}
+
+export default function App() {
+  return (
+    <RouterProvider>
+      <StoreProvider>
+        <Shell />
+      </StoreProvider>
+    </RouterProvider>
   )
 }

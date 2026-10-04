@@ -20,5 +20,5 @@ export function defaultTargets(skill: Skill) {
 
 export function formatTargets(targets: InstallTarget[] | undefined) {
   if (!targets || targets.length === 0) return ''
-  return targets.map((target) => TARGET_LABEL[target]).join(' · ')
+  return targets.map((target) => TARGET_LABEL[target]).join(', ')
 }

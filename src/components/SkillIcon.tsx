@@ -16,7 +16,7 @@ export function SkillIcon({ skill, size = 62 }: SkillIconProps) {
 
   return (
     <div
-      className="relative shrink-0 overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.38)] ring-1 ring-white/12"
+      className="relative shrink-0 overflow-hidden ring-1 ring-ink/10"
       style={{
         width: size,
         height: size,
