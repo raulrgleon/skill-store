@@ -4,6 +4,8 @@ export type Compatibility = 'full' | 'partial' | 'none'
 
 export type StoreTab = 'hoy' | 'explorar' | 'equipos' | 'biblioteca'
 
+export type GalleryImage = { file: string; caption: string; w?: number; h?: number }
+
 export type Skill = {
   id: string
   name: string
@@ -22,7 +24,7 @@ export type Skill = {
   version: string
   size: string
   age: string
-  icon: { from: string; to: string; glyph: string }
+  icon: { from: string; to: string; glyph: string; symbol?: string }
   story?: {
     image: string
     kicker: string
@@ -30,5 +32,7 @@ export type Skill = {
     subtitle: string
   }
   screenshots: { title: string; body: string; from: string; to: string }[]
+  // Imágenes reales: se sirven desde /media/<id>/<file>.
+  gallery?: GalleryImage[]
   reviews: { user: string; rating: number; text: string; date: string }[]
 }

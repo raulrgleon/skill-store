@@ -47,6 +47,17 @@ export function installCommand(id: string, target?: string) {
   return `npm run skillstore -- install ${id}${target ? ` --target ${target}` : ''}`
 }
 
+// SKILL.md en crudo, servido por la propia web (lo usa curl y el botón de descarga).
+export function skillFileUrl(id: string) {
+  return `/skills/${encodeURIComponent(id)}/SKILL.md`
+}
+
+// Instalación sin el instalador local: descarga el SKILL.md a la carpeta del agente.
+export function webInstallCommand(id: string, home: string) {
+  const dir = `${home}/${id}`
+  return `mkdir -p ${dir} && curl -fsSL ${window.location.origin}${skillFileUrl(id)} -o ${dir}/SKILL.md`
+}
+
 export function skillPath(id: string) {
   return `/skill/${encodeURIComponent(id)}`
 }

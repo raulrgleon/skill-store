@@ -17,6 +17,7 @@ import {
   registerFailure,
   SESSION_SECONDS,
 } from './auth.ts'
+import { serveSkillFile } from './files.ts'
 import { adminRoute, readBody, send } from './http.ts'
 
 // Servidor de producción: sirve la web (dist/) y la API del panel /api/admin con login.
@@ -173,6 +174,7 @@ const server = createServer(async (req, res) => {
       res.statusCode = 405
       return res.end('Método no permitido')
     }
+    if (serveSkillFile(req, res, url)) return
     return await serveStatic(req, res, url)
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Error inesperado'

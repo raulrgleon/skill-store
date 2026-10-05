@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http'
 import { sep } from 'node:path'
 import type { Plugin } from 'vite'
 import { AdminError } from './admin.ts'
+import { serveSkillFile } from './files.ts'
 import { adminRoute, readBody, send } from './http.ts'
 import { installSkill, listInstalled, parseTargets, uninstallSkill } from './installer.ts'
 
@@ -25,11 +26,12 @@ export function skillStoreApi(): Plugin {
     // petición y el aviso de "guardado" se perdería. El panel recarga él mismo al terminar.
     handleHotUpdate({ file }) {
       const path = file.split(sep).join('/')
-      if (path.endsWith('/src/data/catalog.json') || path.includes('/catalog/')) return []
+      if (path.endsWith('/src/data/catalog.json') || path.includes('/catalog/') || path.includes('/media/')) return []
     },
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url?.split('?')[0] ?? ''
+        if (serveSkillFile(req, res, url)) return
         if (!url.startsWith('/api/')) {
           next()
           return

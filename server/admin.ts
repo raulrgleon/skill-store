@@ -1,9 +1,11 @@
 import { execFile } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
+import { isSymbolName } from '../src/icons/symbolNames.ts'
 
 const run = promisify(execFile)
 
@@ -16,6 +18,7 @@ const ROOT = REMOTE
   : resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const CATALOG = join(ROOT, 'catalog')
 const CATALOG_JSON = join(ROOT, 'src', 'data', 'catalog.json')
+const MEDIA = join(ROOT, 'media')
 const TRASH = join(CATALOG, '.trash')
 const BRANCH = process.env.SKILLSTORE_BRANCH ?? 'main'
 
@@ -26,6 +29,9 @@ const LEVELS = ['full', 'partial', 'none'] as const
 const ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const HEX_RE = /^#[0-9a-fA-F]{6}$/
 const MAX_DOC = 500_000
+const MAX_GALLERY = 8
+const MAX_IMAGE = 2_500_000
+const MEDIA_FILE_RE = /^[a-f0-9]{12}\.(?:png|jpg|webp|gif)$/
 
 type Json = Record<string, unknown>
 
@@ -40,6 +46,12 @@ export function assertId(id: unknown): string {
     fail('El id solo admite minúsculas, números y guiones (por ejemplo: mi-skill).')
   }
   return id
+}
+
+function mediaDir(id: string) {
+  const dir = resolve(MEDIA, id)
+  if (!dir.startsWith(MEDIA + sep)) fail('Ruta no permitida.')
+  return dir
 }
 
 function skillDir(id: string) {
@@ -93,10 +105,12 @@ function cleanSkill(input: Json, id: string, previous?: Json): Json {
   if (agents.length === 0) fail('Marca al menos un agente compatible.')
 
   const iconIn = (input.icon ?? {}) as Json
+  if (iconIn.symbol !== undefined && iconIn.symbol !== '' && !isSymbolName(iconIn.symbol)) fail('Ese símbolo de icono no existe.')
   const icon = {
     from: color(iconIn.from, 'Color inicial del icono'),
     to: color(iconIn.to, 'Color final del icono'),
     glyph: text(iconIn.glyph, 'Glifo del icono', 3, false) || text(input.name, 'Nombre', 60).slice(0, 2),
+    ...(isSymbolName(iconIn.symbol) ? { symbol: iconIn.symbol } : {}),
   }
 
   const next: Json = {
@@ -127,6 +141,73 @@ function cleanSkill(input: Json, id: string, previous?: Json): Json {
   next.screenshots ??= []
   next.reviews ??= []
   return next
+}
+
+type Pending = { name: string; data: Buffer }
+
+// Tipo real por los primeros bytes: la extensión o el Content-Type del cliente no se creen.
+function sniffImage(buf: Buffer): 'png' | 'jpg' | 'webp' | 'gif' | null {
+  if (buf.length > 12 && buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return 'png'
+  if (buf.length > 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpg'
+  if (buf.length > 12 && buf.subarray(0, 4).toString('latin1') === 'RIFF' && buf.subarray(8, 12).toString('latin1') === 'WEBP') return 'webp'
+  if (buf.length > 6 && buf.subarray(0, 4).toString('latin1') === 'GIF8') return 'gif'
+  return null
+}
+
+function dimension(value: unknown) {
+  const n = typeof value === 'number' ? value : Number(value)
+  return Number.isInteger(n) && n >= 1 && n <= 10_000 ? n : undefined
+}
+
+// Valida la galería entera antes de escribir nada en disco.
+function parseGallery(id: string, input: unknown, uploads: unknown) {
+  const entries = Array.isArray(input) ? input : []
+  if (entries.length > MAX_GALLERY) fail(`La galería admite hasta ${MAX_GALLERY} imágenes.`)
+  const ups = uploads && typeof uploads === 'object' ? (uploads as Record<string, unknown>) : {}
+  const dir = mediaDir(id)
+  const gallery: Json[] = []
+  const pending: Pending[] = []
+
+  for (const raw of entries) {
+    const entry = (raw ?? {}) as Json
+    const caption = text(entry.caption, 'El pie de la imagen', 140, false)
+    let file = typeof entry.file === 'string' ? entry.file : ''
+
+    if (Object.hasOwn(ups, file)) {
+      const encoded = ups[file]
+      if (typeof encoded !== 'string') fail('Imagen no válida.')
+      const data = Buffer.from(encoded, 'base64')
+      if (data.length === 0) fail('Una imagen llegó vacía.')
+      if (data.length > MAX_IMAGE) fail('Cada imagen puede pesar hasta 2,5 MB.')
+      const kind = sniffImage(data)
+      if (!kind) fail('Solo se admiten imágenes PNG, JPG, WebP o GIF.')
+      file = `${createHash('sha1').update(data).digest('hex').slice(0, 12)}.${kind}`
+      pending.push({ name: file, data })
+    } else {
+      if (!MEDIA_FILE_RE.test(file)) fail('Imagen no válida.')
+      if (!existsSync(join(dir, file))) fail('Una imagen de la galería ya no existe: quítala y vuelve a subirla.')
+    }
+
+    const w = dimension(entry.w)
+    const h = dimension(entry.h)
+    gallery.push({ file, caption, ...(w && h ? { w, h } : {}) })
+  }
+  return { gallery, pending }
+}
+
+// Escribe las nuevas y borra las que ya no están en la galería.
+async function applyGallery(id: string, gallery: Json[], pending: Pending[]) {
+  const dir = mediaDir(id)
+  if (gallery.length === 0) {
+    await rm(dir, { recursive: true, force: true })
+    return
+  }
+  await mkdir(dir, { recursive: true })
+  for (const item of pending) await writeFile(join(dir, item.name), item.data)
+  const keep = new Set(gallery.map((item) => String(item.file)))
+  for (const name of await readdir(dir)) {
+    if (!keep.has(name)) await rm(join(dir, name), { force: true })
+  }
 }
 
 async function countExtraFiles(dir: string): Promise<number> {
@@ -168,7 +249,7 @@ export async function adminGet(id: string) {
   return { skill, doc, extraFiles: await countExtraFiles(skillDir(id)) }
 }
 
-export function adminSave(input: { id: unknown; isNew: unknown; skill: unknown; doc: unknown }) {
+export function adminSave(input: { id: unknown; isNew: unknown; skill: unknown; doc: unknown; uploads?: unknown }) {
   return serial(async () => {
     const id = assertId(input.id)
     if (!input.skill || typeof input.skill !== 'object') fail('Faltan los datos de la skill.')
@@ -183,12 +264,16 @@ export function adminSave(input: { id: unknown; isNew: unknown; skill: unknown; 
     if (!input.isNew && index === -1) fail('Esa skill ya no existe.')
 
     const skill = cleanSkill(input.skill as Json, id, index === -1 ? undefined : list[index])
+    // Valida la galería entera antes de tocar el disco.
+    const { gallery, pending } = parseGallery(id, (input.skill as Json).gallery, input.uploads)
+    if (gallery.length > 0) skill.gallery = gallery
     if (index === -1) list.push(skill)
     else list[index] = skill
 
     const dir = skillDir(id)
     await mkdir(dir, { recursive: true })
     await writeFile(join(dir, 'SKILL.md'), doc.endsWith('\n') ? doc : `${doc}\n`)
+    await applyGallery(id, gallery, pending)
     await writeCatalog(list)
     if (REMOTE) await publishRemote(`${input.isNew ? 'Añadir' : 'Actualizar'} skill ${String(skill.name)}`)
     return { skill }
@@ -217,6 +302,15 @@ export function adminDelete(id: string) {
         await rename(dir, trashed)
       }
     }
+    const media = mediaDir(id)
+    if (existsSync(media)) {
+      if (REMOTE) {
+        await rm(media, { recursive: true, force: true })
+      } else {
+        await mkdir(TRASH, { recursive: true })
+        await rename(media, join(TRASH, `${id}-${Date.now()}-media`))
+      }
+    }
     await writeCatalog(list)
     if (REMOTE) await publishRemote(`Eliminar skill ${name}`)
     return { id, trashed: trashed ? trashed.replace(ROOT + sep, '') : null }
@@ -225,7 +319,7 @@ export function adminDelete(id: string) {
 
 // ---- git ------------------------------------------------------------------
 
-const PUBLISH_PATHS = ['catalog', 'src/data/catalog.json']
+const PUBLISH_PATHS = ['catalog', 'media', 'src/data/catalog.json']
 
 async function git(args: string[], cwd = ROOT) {
   const { stdout } = await run('git', args, {

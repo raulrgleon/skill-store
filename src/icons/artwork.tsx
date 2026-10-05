@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 type ArtProps = { id: string }
 
-function shine(id: string) {
+export function shine(id: string) {
   return (
     <>
       <linearGradient id={`${id}-shine`} x1="0" y1="0" x2="0" y2="1">
@@ -232,13 +232,4 @@ export const artwork: Record<string, (props: ArtProps) => ReactNode> = {
       {shine(id)}
     </>
   ),
-}
-
-export function fallbackArt({ id }: ArtProps) {
-  return (
-    <>
-      <circle cx="50" cy="50" r="18" fill="#fff" opacity="0.9" />
-      {shine(id)}
-    </>
-  )
 }

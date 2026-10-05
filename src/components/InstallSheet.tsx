@@ -6,11 +6,13 @@ import { defaultTargets, installableTargets } from '../lib/targets'
 import { Button } from '../ui/Button'
 import { Dialog } from '../ui/Dialog'
 import { SkillIcon } from './SkillIcon'
+import { WebInstall } from './WebInstall'
 
 const webOnly = ['ChatGPT', 'Gemini', 'Copilot'] as const
 
 type InstallSheetProps = {
   skill: Skill
+  installer: boolean
   homes: Record<InstallTarget, string>
   busy: boolean
   error: string | null
@@ -18,7 +20,23 @@ type InstallSheetProps = {
   onInstall: (targets: InstallTarget[]) => void
 }
 
-export function InstallSheet({ skill, homes, busy, error, onClose, onInstall }: InstallSheetProps) {
+export function InstallSheet(props: InstallSheetProps) {
+  if (props.installer) return <LocalSheet {...props} />
+  return (
+    <Dialog title="Instalar skill" onClose={props.onClose}>
+      <div className="mb-4 flex items-center gap-3">
+        <SkillIcon skill={props.skill} size={48} />
+        <div>
+          <p className="text-[15px] font-medium">{props.skill.name}</p>
+          <p className="text-[13px] text-mute">Elige tu agente y copia el comando.</p>
+        </div>
+      </div>
+      <WebInstall skill={props.skill} />
+    </Dialog>
+  )
+}
+
+function LocalSheet({ skill, homes, busy, error, onClose, onInstall }: InstallSheetProps) {
   const options = useMemo(() => installableTargets(skill), [skill])
   const [selected, setSelected] = useState<InstallTarget[]>(() => defaultTargets(skill))
   const unavailable = webOnly.filter((agent) => (skill.compatibility[agent] ?? 'none') !== 'none')

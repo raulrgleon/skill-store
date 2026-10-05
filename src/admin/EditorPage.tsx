@@ -1,6 +1,8 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ArrowLeft, FileText, Save, Wand2 } from 'lucide-react'
 import { SkillCard } from '../components/SkillCard'
+import { SYMBOL_NAMES } from '../icons/symbolNames.ts'
+import { symbolIcons } from '../icons/symbols'
 import { agents as agentList, categories } from '../data/skills'
 import { useRouter } from '../lib/router'
 import { cn } from '../lib/cn'
@@ -12,6 +14,7 @@ import { Field, Input, TextArea } from '../ui/Input'
 import { Skeleton } from '../ui/Skeleton'
 import { Tabs } from '../ui/Tabs'
 import { adminApi, AuthError, flash, takeFlash } from './api'
+import { GalleryEditor, newKey, type GalleryItem } from './GalleryEditor'
 import { useAdminSession } from './Gate'
 
 const Markdown = lazy(() => import('../ui/Markdown'))
@@ -47,6 +50,7 @@ type Form = {
   agents: Agent[]
   from: string
   to: string
+  symbol: string
   rating: string
   ratingsCount: string
   size: string
@@ -84,6 +88,7 @@ function blankForm(): Form {
     agents: ['Cursor', 'Claude', 'Codex'],
     from,
     to,
+    symbol: '',
     rating: '0',
     ratingsCount: '0',
     size: '',
@@ -111,6 +116,7 @@ function formFromSkill(skill: Skill): Form {
     agents: skill.agents,
     from: skill.icon.from,
     to: skill.icon.to,
+    symbol: skill.icon.symbol ?? '',
     rating: String(skill.rating),
     ratingsCount: String(skill.ratingsCount),
     size: skill.size,
@@ -118,7 +124,7 @@ function formFromSkill(skill: Skill): Form {
   }
 }
 
-function toSkill(form: Form, previous: Skill | null): Skill {
+function toSkill(form: Form, previous: Skill | null, gallery: GalleryItem[] = []): Skill {
   return {
     id: form.id || 'nueva-skill',
     name: form.name.trim() || 'Nombre de la skill',
@@ -137,7 +143,15 @@ function toSkill(form: Form, previous: Skill | null): Skill {
     version: form.version.trim() || '1.0',
     size: form.size.trim(),
     age: form.age.trim() || '4+',
-    icon: { from: form.from, to: form.to, glyph: previous?.icon.glyph ?? form.name.trim().slice(0, 2) },
+    icon: {
+      from: form.from,
+      to: form.to,
+      glyph: previous?.icon.glyph ?? form.name.trim().slice(0, 2),
+      ...(form.symbol ? { symbol: form.symbol } : {}),
+    },
+    ...(gallery.length > 0
+      ? { gallery: gallery.map((item) => ({ file: item.file, caption: item.caption.trim(), w: item.w, h: item.h })) }
+      : {}),
     story: previous?.story,
     screenshots: previous?.screenshots ?? [],
     reviews: previous?.reviews ?? [],
@@ -207,6 +221,7 @@ export default function EditorPage({ id }: { id: string | null }) {
   const [form, setForm] = useState<Form>(blankForm)
   const [previous, setPrevious] = useState<Skill | null>(null)
   const [doc, setDoc] = useState('')
+  const [gallery, setGallery] = useState<GalleryItem[]>([])
   const [extraFiles, setExtraFiles] = useState(0)
   const [loading, setLoading] = useState(!isNew)
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -231,6 +246,7 @@ export default function EditorPage({ id }: { id: string | null }) {
         if (!alive) return
         setForm(formFromSkill(data.skill))
         setPrevious(data.skill)
+        setGallery((data.skill.gallery ?? []).map((item) => ({ ...item, key: newKey() })))
         setDoc(data.doc)
         setExtraFiles(data.extraFiles)
       })
@@ -268,7 +284,7 @@ export default function EditorPage({ id }: { id: string | null }) {
     patch({ compatibility, agents })
   }
 
-  const skill = useMemo(() => toSkill(form, previous), [form, previous])
+  const skill = useMemo(() => toSkill(form, previous, gallery), [form, previous, gallery])
   const issues = useMemo(() => docIssues(doc, form.id), [doc, form.id])
   const categoryOptions = categories.some((item) => item.id === form.category)
     ? categories
@@ -296,9 +312,11 @@ export default function EditorPage({ id }: { id: string | null }) {
     setSaving(true)
     setError(null)
     try {
-      const payload = toSkill(form, previous)
+      const payload = toSkill(form, previous, gallery)
       if (!payload.size) payload.size = `${Math.max(1, Math.round(new Blob([doc]).size / 1024))} KB`
-      await adminApi.save(form.id, { isNew, skill: payload, doc })
+      // Las imágenes nuevas viajan en la misma petición: un solo guardado, un solo commit.
+      const uploads = Object.fromEntries(gallery.filter((item) => item.data).map((item) => [item.file, item.data as string]))
+      await adminApi.save(form.id, { isNew, skill: payload, doc, uploads })
       localStorage.setItem('skillstore-admin-author', form.author.trim())
       saved.current = true
       const message =
@@ -458,7 +476,46 @@ export default function EditorPage({ id }: { id: string | null }) {
             </ul>
           </Section>
 
-          <Section title="Aspecto" hint="Colores del degradado del icono.">
+          <Section title="Aspecto" hint="Símbolo y colores del icono.">
+            <div>
+              <p className="mb-2 text-[13px] text-mute">Símbolo</p>
+              <div role="radiogroup" aria-label="Símbolo del icono" className="grid grid-cols-5 gap-2 sm:grid-cols-8 lg:grid-cols-10">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={form.symbol === ''}
+                  onClick={() => patch({ symbol: '' })}
+                  title="Automático: la ilustración original o un destello"
+                  className={cn(
+                    'grid h-11 place-items-center rounded-[10px] border text-[11px]',
+                    form.symbol === '' ? 'border-accent bg-surface-2 text-ink' : 'border-line text-mute hover:text-ink',
+                  )}
+                >
+                  Auto
+                </button>
+                {SYMBOL_NAMES.map((name) => {
+                  const Icon = symbolIcons[name]
+                  const active = form.symbol === name
+                  return (
+                    <button
+                      key={name}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      aria-label={name}
+                      title={name}
+                      onClick={() => patch({ symbol: name })}
+                      className={cn(
+                        'grid h-11 place-items-center rounded-[10px] border',
+                        active ? 'border-accent bg-surface-2 text-ink' : 'border-line text-mute hover:text-ink',
+                      )}
+                    >
+                      <Icon size={18} aria-hidden />
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
             <div className="flex flex-wrap items-center gap-6">
               {(['from', 'to'] as const).map((key) => (
                 <label key={key} className="flex items-center gap-2 text-[14px]">
@@ -485,6 +542,18 @@ export default function EditorPage({ id }: { id: string | null }) {
                 ))}
               </div>
             </div>
+          </Section>
+
+          <Section title="Imágenes" hint="Capturas o GIF de la skill en uso. Salen en una franja bajo el título de la ficha; la primera es la principal.">
+            <GalleryEditor
+              skillId={form.id}
+              items={gallery}
+              onChange={(items) => {
+                setGallery(items)
+                setDirty(true)
+                setError(null)
+              }}
+            />
           </Section>
 
           <Section title="SKILL.md" hint="Lo que se copia al agente. El bloque inicial con name y description es lo que decide cuándo la usa.">

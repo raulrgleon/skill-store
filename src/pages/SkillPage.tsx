@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { BadgeCheck, Check, ChevronLeft, Copy } from 'lucide-react'
+import { Gallery } from '../components/Gallery'
 import { SkillCard } from '../components/SkillCard'
 import { SkillIcon } from '../components/SkillIcon'
 import { skills } from '../data/skills'
@@ -16,6 +17,7 @@ import { Button } from '../ui/Button'
 import { Skeleton } from '../ui/Skeleton'
 import { Stars } from '../ui/Stars'
 import { Tabs } from '../ui/Tabs'
+import { WebInstall } from '../components/WebInstall'
 
 const Markdown = lazy(() => import('../ui/Markdown'))
 
@@ -77,7 +79,7 @@ function DocView({ skill }: { skill: Skill }) {
 }
 
 function InstallPanel({ skill }: { skill: Skill }) {
-  const { homes, statusOf, requestInstall, removeSkill, installed, notify } = useStore()
+  const { homes, statusOf, requestInstall, removeSkill, installed, installer, ready, notify } = useStore()
   const options = installableTargets(skill)
   const [target, setTarget] = useState<InstallTarget | null>(options[0]?.id ?? null)
   const [copied, setCopied] = useState(false)
@@ -94,6 +96,17 @@ function InstallPanel({ skill }: { skill: Skill }) {
     } catch {
       notify('No se pudo copiar el comando')
     }
+  }
+
+  if (!ready) return <Skeleton className="h-44 w-full rounded-[14px]" />
+
+  if (!installer) {
+    return (
+      <div className="space-y-3 rounded-[14px] border border-line bg-surface p-4">
+        <p className="text-[15px] font-medium">Instalar</p>
+        <WebInstall skill={skill} />
+      </div>
+    )
   }
 
   return (
@@ -191,6 +204,8 @@ export function SkillPage({ id }: { id: string }) {
           </p>
         </div>
       </header>
+
+      {skill.gallery && skill.gallery.length > 0 ? <Gallery id={skill.id} items={skill.gallery} /> : null}
 
       <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Tabs

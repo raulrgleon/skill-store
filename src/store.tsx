@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { skills } from './data/skills'
 import { fetchInstalled, installSkill, uninstallSkill, type InstallTarget, type InstalledMap } from './lib/api'
-import { installCommand } from './lib/catalog'
-import { formatTargets } from './lib/targets'
+import { installCommand, webInstallCommand } from './lib/catalog'
+import { formatTargets, installableTargets } from './lib/targets'
 import { InstallSheet } from './components/InstallSheet'
 import { Toast } from './ui/Toast'
 
@@ -16,6 +16,8 @@ type Status = 'idle' | 'busy' | 'installed'
 
 type StoreValue = {
   ready: boolean
+  // false en la web pública: no hay instalador local y se ofrece el comando/descarga.
+  installer: boolean
   homes: Record<InstallTarget, string>
   installed: InstalledMap
   statusOf: (id: string) => Status
@@ -31,6 +33,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [installed, setInstalled] = useState<InstalledMap>({})
   const [homes, setHomes] = useState(fallbackHomes)
   const [ready, setReady] = useState(false)
+  const [installer, setInstaller] = useState(false)
   const [busy, setBusy] = useState<string[]>([])
   const [pendingId, setPendingId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -43,6 +46,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       .then((data) => {
         setInstalled(data.installed)
         setHomes(data.homes)
+        setInstaller(true)
       })
       .catch(() => {
         // En la web pública no hay instalador: un visitante no debe ver instrucciones de desarrollo.
@@ -66,6 +70,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
     return {
       ready,
+      installer,
       homes,
       installed,
       statusOf,
@@ -93,7 +98,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       },
       async copyCommand(id) {
         try {
-          await navigator.clipboard.writeText(installCommand(id))
+          const skill = skills.find((item) => item.id === id)
+          const folder = skill ? installableTargets(skill)[0] : undefined
+          const command = installer || !folder ? installCommand(id) : webInstallCommand(id, homes[folder.id])
+          await navigator.clipboard.writeText(command)
           setMessage('Comando copiado')
         } catch {
           setMessage('No se pudo copiar el comando')
@@ -101,7 +109,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       },
       notify: setMessage,
     }
-  }, [busy, homes, installed, ready])
+  }, [busy, homes, installed, installer, ready])
 
   async function confirmInstall(targets: InstallTarget[]) {
     if (!pendingId) return
@@ -127,6 +135,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         <InstallSheet
           skill={pending}
           homes={homes}
+          installer={installer}
           busy={busy.includes(pending.id)}
           error={error}
           onClose={() => setPendingId(null)}

@@ -44,7 +44,7 @@ export const adminApi = {
   list: () => request<{ items: AdminItem[] }>('skills'),
   get: (id: string) =>
     request<{ skill: Skill; doc: string; extraFiles: number }>(`skills/${encodeURIComponent(id)}`),
-  save: (id: string, body: { isNew: boolean; skill: Skill; doc: string }) =>
+  save: (id: string, body: { isNew: boolean; skill: Skill; doc: string; uploads?: Record<string, string> }) =>
     request<{ skill: Skill }>(`skills/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(body) }),
   remove: (id: string) =>
     request<{ id: string; trashed: string | null }>(`skills/${encodeURIComponent(id)}`, { method: 'DELETE' }),

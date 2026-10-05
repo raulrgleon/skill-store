@@ -12,7 +12,12 @@ WORKDIR /app
 ENV NODE_ENV=production PORT=80 SKILLSTORE_ROOT=/data/repo
 COPY package.json ./
 COPY server ./server
+COPY src/icons/symbolNames.ts ./src/icons/symbolNames.ts
 COPY --from=build /app/dist ./dist
+# Copia base del catálogo (SKILL.md, imágenes y metadatos) para las descargas públicas.
+COPY catalog ./catalog
+COPY media ./media
+COPY src/data/catalog.json ./src/data/catalog.json
 COPY deploy/known_hosts /etc/ssh/ssh_known_hosts
 COPY deploy/entrypoint.sh /entrypoint.sh
 EXPOSE 80

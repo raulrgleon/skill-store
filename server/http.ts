@@ -9,6 +9,8 @@ import {
 } from './admin.ts'
 
 const MAX_BODY = 1_500_000
+// Guardar una skill puede incluir imágenes (base64): hasta 8 de 2,5 MB.
+const MAX_BODY_WITH_MEDIA = 30_000_000
 
 export function send(res: ServerResponse, status: number, data: unknown) {
   res.statusCode = status
@@ -17,14 +19,14 @@ export function send(res: ServerResponse, status: number, data: unknown) {
   res.end(JSON.stringify(data))
 }
 
-export function readBody(req: IncomingMessage) {
+export function readBody(req: IncomingMessage, limit = MAX_BODY) {
   return new Promise<unknown>((resolve, reject) => {
     const chunks: Buffer[] = []
     let size = 0
     req.on('data', (chunk) => {
       const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)
       size += buf.length
-      if (size > MAX_BODY) {
+      if (size > limit) {
         reject(new Error('La petición es demasiado grande.'))
         req.destroy()
         return
@@ -56,8 +58,13 @@ export async function adminRoute(req: IncomingMessage, res: ServerResponse, url:
   if (req.method === 'GET' && head === 'skills' && !id) return send(res, 200, await adminList())
   if (req.method === 'GET' && head === 'skills') return send(res, 200, await adminGet(id))
   if (req.method === 'PUT' && head === 'skills') {
-    const body = (await readBody(req)) as { isNew?: unknown; skill?: unknown; doc?: unknown }
-    return send(res, 200, await adminSave({ id, isNew: body.isNew, skill: body.skill, doc: body.doc }))
+    const body = (await readBody(req, MAX_BODY_WITH_MEDIA)) as {
+      isNew?: unknown
+      skill?: unknown
+      doc?: unknown
+      uploads?: unknown
+    }
+    return send(res, 200, await adminSave({ id, isNew: body.isNew, skill: body.skill, doc: body.doc, uploads: body.uploads }))
   }
   if (req.method === 'DELETE' && head === 'skills') return send(res, 200, await adminDelete(id))
   if (req.method === 'GET' && head === 'status') return send(res, 200, await adminStatus())
