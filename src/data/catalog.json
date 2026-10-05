@@ -1602,5 +1602,42 @@
         "date": "Hoy"
       }
     ]
+  },
+  {
+    "id": "prueba-produccion",
+    "name": "Prueba Producción",
+    "subtitle": "Creada desde la web",
+    "author": "Skill Store Labs",
+    "category": "Marketing",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": true,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "ChatGPT",
+      "Gemini"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "partial",
+      "Codex": "none",
+      "Gemini": "partial",
+      "Copilot": "none"
+    },
+    "description": "Skill temporal para probar el panel en producción.",
+    "whatsNew": "Ahora detecta canibalización de keywords y propone un mapa de enlaces internos.",
+    "version": "2.4",
+    "size": "184 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0A84FF",
+      "to": "#64D2FF",
+      "glyph": "S"
+    },
+    "screenshots": [],
+    "reviews": []
   }
 ]
