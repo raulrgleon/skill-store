@@ -11,7 +11,8 @@ import { Card } from '../ui/Card'
 import { Field, Input, TextArea } from '../ui/Input'
 import { Skeleton } from '../ui/Skeleton'
 import { Tabs } from '../ui/Tabs'
-import { adminApi, flash, takeFlash } from './api'
+import { adminApi, AuthError, flash, takeFlash } from './api'
+import { useAdminSession } from './Gate'
 
 const Markdown = lazy(() => import('../ui/Markdown'))
 
@@ -200,6 +201,7 @@ const selectClass = 'h-10 w-full rounded-[10px] border border-line bg-surface px
 export default function EditorPage({ id }: { id: string | null }) {
   const { navigate } = useRouter()
   const { notify } = useStore()
+  const { mode } = useAdminSession()
   const isNew = id === null
 
   const [form, setForm] = useState<Form>(blankForm)
@@ -299,12 +301,23 @@ export default function EditorPage({ id }: { id: string | null }) {
       await adminApi.save(form.id, { isNew, skill: payload, doc })
       localStorage.setItem('skillstore-admin-author', form.author.trim())
       saved.current = true
-      const message = isNew ? `"${form.name}" creada. Publica los cambios para subirla.` : `"${form.name}" guardada.`
+      const message =
+        mode === 'remote'
+          ? `"${form.name}" ${isNew ? 'creada' : 'guardada'}. La web se actualiza en ~1 minuto.`
+          : isNew
+            ? `"${form.name}" creada. Publica los cambios para subirla.`
+            : `"${form.name}" guardada.`
       flash(message)
       // Recarga completa: así el catálogo público también ve los datos nuevos.
       window.location.assign('/admin')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'No se pudo guardar.')
+      setError(
+        err instanceof AuthError
+          ? 'Tu sesión terminó. Abre /admin en otra pestaña, inicia sesión y vuelve a pulsar Guardar aquí: no pierdes lo escrito.'
+          : err instanceof Error
+            ? err.message
+            : 'No se pudo guardar.',
+      )
       setSaving(false)
     }
   }

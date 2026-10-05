@@ -4,7 +4,19 @@ export type AdminItem = { skill: Skill; hasDoc: boolean; extraFiles: number }
 
 export type GitChange = { code: string; file: string }
 
-export type AdminStatus = { git: boolean; branch: string; changes: GitChange[]; ahead: number }
+export type AdminMode = 'local' | 'remote'
+
+export type AdminStatus = {
+  mode: AdminMode
+  git: boolean
+  branch: string
+  changes: GitChange[]
+  ahead: number
+}
+
+export type Session = { authenticated: boolean; mode: AdminMode; configured: boolean }
+
+export class AuthError extends Error {}
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const response = await fetch(`/api/admin/${path}`, {
@@ -17,6 +29,7 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   } catch {
     throw new Error('El servidor no respondió al panel. Reinicia npm run dev.')
   }
+  if (response.status === 401 && path !== 'login') throw new AuthError('Tu sesión terminó. Inicia sesión otra vez.')
   if (!response.ok) {
     const message = (data as { error?: string } | null)?.error
     throw new Error(message || 'No se pudo completar la acción.')
@@ -25,6 +38,9 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 }
 
 export const adminApi = {
+  session: () => request<Session>('session'),
+  login: (password: string) => request<Session>('login', { method: 'POST', body: JSON.stringify({ password }) }),
+  logout: () => request<{ authenticated: boolean }>('logout', { method: 'POST', body: '{}' }),
   list: () => request<{ items: AdminItem[] }>('skills'),
   get: (id: string) =>
     request<{ skill: Skill; doc: string; extraFiles: number }>(`skills/${encodeURIComponent(id)}`),

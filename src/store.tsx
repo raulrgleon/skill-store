@@ -45,7 +45,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setHomes(data.homes)
       })
       .catch(() => {
-        setMessage('Reinicia npm run dev para activar el instalador.')
+        // En la web pública no hay instalador: un visitante no debe ver instrucciones de desarrollo.
+        if (import.meta.env.DEV) setMessage('Reinicia npm run dev para activar el instalador.')
       })
       .finally(() => setReady(true))
   }, [])

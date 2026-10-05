@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, BadgeCheck, ExternalLink, Pencil, Plus, Search, Trash2, UploadCloud } from 'lucide-react'
+import { AlertTriangle, BadgeCheck, ExternalLink, LogOut, Pencil, Plus, Search, Trash2, UploadCloud } from 'lucide-react'
 import { SkillIcon } from '../components/SkillIcon'
 import { categories } from '../data/skills'
 import { useRouter } from '../lib/router'
@@ -10,7 +10,8 @@ import { Button } from '../ui/Button'
 import { Dialog } from '../ui/Dialog'
 import { Field, Input } from '../ui/Input'
 import { Skeleton } from '../ui/Skeleton'
-import { adminApi, flash, takeFlash, type AdminItem, type AdminStatus } from './api'
+import { adminApi, AuthError, flash, takeFlash, type AdminItem, type AdminMode, type AdminStatus } from './api'
+import { useAdminSession } from './Gate'
 
 const CODE_LABEL: Record<string, string> = {
   M: 'Modificado',
@@ -96,10 +97,12 @@ function PublishDialog({
 
 function DeleteDialog({
   item,
+  mode,
   onClose,
   onDone,
 }: {
   item: AdminItem
+  mode: AdminMode
   onClose: () => void
   onDone: (message: string) => void
 }) {
@@ -112,7 +115,11 @@ function DeleteDialog({
     setError(null)
     try {
       await adminApi.remove(skill.id)
-      onDone(`"${skill.name}" eliminada. La carpeta quedó en catalog/.trash.`)
+      onDone(
+        mode === 'remote'
+          ? `"${skill.name}" eliminada. La web se actualiza en ~1 minuto.`
+          : `"${skill.name}" eliminada. La carpeta quedó en catalog/.trash.`,
+      )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'No se pudo eliminar.')
       setBusy(false)
@@ -125,11 +132,18 @@ function DeleteDialog({
         <p className="text-[14px] leading-relaxed">
           Vas a quitar <strong className="font-medium">{skill.name}</strong> del catálogo.
         </p>
-        <p className="text-[13px] leading-relaxed text-mute">
-          La carpeta <span className="font-mono text-[12px]">catalog/{skill.id}</span> se mueve a{' '}
-          <span className="font-mono text-[12px]">catalog/.trash</span> (no se sube a git). Si ya publicaste esta skill,
-          sigue en el historial de git hasta que publiques este cambio.
-        </p>
+        {mode === 'remote' ? (
+          <p className="text-[13px] leading-relaxed text-mute">
+            Se borra del repositorio y la web se redespliega sola. Si te equivocas, el historial de git la conserva y se
+            puede recuperar.
+          </p>
+        ) : (
+          <p className="text-[13px] leading-relaxed text-mute">
+            La carpeta <span className="font-mono text-[12px]">catalog/{skill.id}</span> se mueve a{' '}
+            <span className="font-mono text-[12px]">catalog/.trash</span> (no se sube a git). Si ya publicaste esta
+            skill, sigue en el historial de git hasta que publiques este cambio.
+          </p>
+        )}
         {error ? (
           <p role="alert" className="text-[13px] text-danger">
             {error}
@@ -152,6 +166,8 @@ function DeleteDialog({
 export default function AdminPage() {
   const { navigate } = useRouter()
   const { notify } = useStore()
+  const { mode, logout } = useAdminSession()
+  const remote = mode === 'remote'
   const [items, setItems] = useState<AdminItem[] | null>(null)
   const [status, setStatus] = useState<AdminStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -167,6 +183,8 @@ export default function AdminPage() {
       setStatus(git)
       setError(null)
     } catch (err) {
+      // Sesión caducada: recargar muestra la pantalla de acceso.
+      if (err instanceof AuthError) return window.location.reload()
       setError(err instanceof Error ? err.message : 'No se pudo cargar el catálogo.')
     }
   }, [])
@@ -204,15 +222,26 @@ export default function AdminPage() {
     <div className="mx-auto max-w-[1200px] px-5 py-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-[13px] text-mute">Solo en tu equipo · no se incluye en la web pública</p>
+          <p className="text-[13px] text-mute">
+            {remote
+              ? 'Cada cambio se publica al guardar · la web se actualiza en ~1 minuto'
+              : 'Solo en tu equipo · no se incluye en la web pública'}
+          </p>
           <h1 className="mt-1 text-[32px] font-medium tracking-tight">Administración</h1>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="secondary" onClick={() => setPublishing(true)} disabled={!status?.git || pending === 0}>
-            <UploadCloud size={15} aria-hidden />
-            Publicar cambios
-            {pending > 0 ? <Badge tone="accent">{pending}</Badge> : null}
-          </Button>
+          {remote ? (
+            <Button variant="ghost" onClick={() => void logout()}>
+              <LogOut size={15} aria-hidden />
+              Salir
+            </Button>
+          ) : (
+            <Button variant="secondary" onClick={() => setPublishing(true)} disabled={!status?.git || pending === 0}>
+              <UploadCloud size={15} aria-hidden />
+              Publicar cambios
+              {pending > 0 ? <Badge tone="accent">{pending}</Badge> : null}
+            </Button>
+          )}
           <Button onClick={() => navigate('/admin/nueva')}>
             <Plus size={15} aria-hidden />
             Nueva skill
@@ -226,7 +255,7 @@ export default function AdminPage() {
         </p>
       ) : null}
 
-      {pending > 0 ? (
+      {!remote && pending > 0 ? (
         <p className="mt-6 rounded-[10px] border border-accent/40 bg-accent/8 px-3 py-2.5 text-[13px]">
           {status && status.changes.length > 0
             ? `Tienes ${status.changes.length} ${status.changes.length === 1 ? 'archivo' : 'archivos'} sin publicar.`
@@ -354,7 +383,7 @@ export default function AdminPage() {
       {publishing && status ? (
         <PublishDialog status={status} onClose={() => setPublishing(false)} onDone={afterPublish} />
       ) : null}
-      {deleting ? <DeleteDialog item={deleting} onClose={() => setDeleting(null)} onDone={afterDelete} /> : null}
+      {deleting ? <DeleteDialog item={deleting} mode={mode} onClose={() => setDeleting(null)} onDone={afterDelete} /> : null}
     </div>
   )
 }

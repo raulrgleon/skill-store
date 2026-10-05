@@ -11,14 +11,14 @@ import { SkillPage } from './pages/SkillPage'
 import { SubmitPage } from './pages/SubmitPage'
 import { TeamsPage } from './pages/TeamsPage'
 import { StoreProvider } from './store'
+import { AdminGate } from './admin/Gate'
 import { Button } from './ui/Button'
 import { CommandPalette } from './ui/CommandPalette'
 import { Skeleton } from './ui/Skeleton'
 
-// El panel de administración solo se compila en desarrollo (import.meta.env.DEV es una
-// constante en build): la web pública no incluye ni el código ni las rutas.
-const AdminPage = import.meta.env.DEV ? lazy(() => import('./admin/AdminPage')) : null
-const EditorPage = import.meta.env.DEV ? lazy(() => import('./admin/EditorPage')) : null
+// El panel va en trozos aparte (solo se descargan al entrar en /admin) y la API exige sesión.
+const AdminPage = lazy(() => import('./admin/AdminPage'))
+const EditorPage = lazy(() => import('./admin/EditorPage'))
 
 function routeKey(route: ReturnType<typeof useRouter>['route']) {
   if (route.page === 'skill') return `skill:${route.id}`
@@ -83,17 +83,21 @@ function Shell() {
     if (route.page === 'submit') return <SubmitPage />
     if (route.page === 'library') return <LibraryPage />
     if (route.page === 'teams') return <TeamsPage />
-    if (route.page === 'admin' && AdminPage) {
+    if (route.page === 'admin') {
       return (
         <Suspense fallback={<Skeleton className="mx-auto mt-10 h-96 max-w-[1200px]" />}>
-          <AdminPage />
+          <AdminGate>
+            <AdminPage />
+          </AdminGate>
         </Suspense>
       )
     }
-    if (route.page === 'admin-edit' && EditorPage) {
+    if (route.page === 'admin-edit') {
       return (
         <Suspense fallback={<Skeleton className="mx-auto mt-10 h-96 max-w-[1200px]" />}>
-          <EditorPage id={route.id} />
+          <AdminGate>
+            <EditorPage id={route.id} />
+          </AdminGate>
         </Suspense>
       )
     }

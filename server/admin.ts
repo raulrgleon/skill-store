@@ -1,16 +1,25 @@
 import { execFile } from 'node:child_process'
 import { existsSync } from 'node:fs'
-import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
-import { catalogRoot } from './installer.ts'
 
 const run = promisify(execFile)
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+// Local (npm run dev): trabaja sobre esta carpeta y publica con commit + push manual.
+// Remoto (producción): SKILLSTORE_REMOTE = URL git. Trabaja sobre un clon propio y cada cambio
+// hace commit + push al momento; el webhook de Coolify redespliega el sitio.
+const REMOTE = process.env.SKILLSTORE_REMOTE ?? ''
+const ROOT = REMOTE
+  ? resolve(process.env.SKILLSTORE_ROOT ?? '/data/repo')
+  : resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const CATALOG = join(ROOT, 'catalog')
 const CATALOG_JSON = join(ROOT, 'src', 'data', 'catalog.json')
-const TRASH = join(catalogRoot(), '.trash')
+const TRASH = join(CATALOG, '.trash')
+const BRANCH = process.env.SKILLSTORE_BRANCH ?? 'main'
+
+export const adminMode = REMOTE ? 'remote' : 'local'
 
 const AGENTS = ['Cursor', 'Claude', 'ChatGPT', 'Codex', 'Gemini', 'Copilot'] as const
 const LEVELS = ['full', 'partial', 'none'] as const
@@ -34,9 +43,9 @@ export function assertId(id: unknown): string {
 }
 
 function skillDir(id: string) {
-  const dir = resolve(catalogRoot(), id)
+  const dir = resolve(CATALOG, id)
   // Defensa extra: nunca salir de catalog/ aunque el regex cambie en el futuro.
-  if (!dir.startsWith(resolve(catalogRoot()) + sep)) fail('Ruta no permitida.')
+  if (!dir.startsWith(CATALOG + sep)) fail('Ruta no permitida.')
   return dir
 }
 
@@ -132,6 +141,7 @@ async function countExtraFiles(dir: string): Promise<number> {
 }
 
 export async function adminList() {
+  await syncRemote()
   const list = await readCatalog()
   const items = await Promise.all(
     list.map(async (skill) => {
@@ -149,6 +159,7 @@ export async function adminList() {
 
 export async function adminGet(id: string) {
   assertId(id)
+  await syncRemote()
   const list = await readCatalog()
   const skill = list.find((item) => item.id === id)
   if (!skill) fail('No existe esa skill.')
@@ -157,57 +168,126 @@ export async function adminGet(id: string) {
   return { skill, doc, extraFiles: await countExtraFiles(skillDir(id)) }
 }
 
-export async function adminSave(input: { id: unknown; isNew: unknown; skill: unknown; doc: unknown }) {
-  const id = assertId(input.id)
-  if (!input.skill || typeof input.skill !== 'object') fail('Faltan los datos de la skill.')
-  const doc = typeof input.doc === 'string' ? input.doc : ''
-  if (!doc.trim()) fail('El SKILL.md no puede estar vacío: es lo que instala el agente.')
-  if (doc.length > MAX_DOC) fail('El SKILL.md es demasiado grande (máximo 500 KB).')
+export function adminSave(input: { id: unknown; isNew: unknown; skill: unknown; doc: unknown }) {
+  return serial(async () => {
+    const id = assertId(input.id)
+    if (!input.skill || typeof input.skill !== 'object') fail('Faltan los datos de la skill.')
+    const doc = typeof input.doc === 'string' ? input.doc : ''
+    if (!doc.trim()) fail('El SKILL.md no puede estar vacío: es lo que instala el agente.')
+    if (doc.length > MAX_DOC) fail('El SKILL.md es demasiado grande (máximo 500 KB).')
 
-  const list = await readCatalog()
-  const index = list.findIndex((item) => item.id === id)
-  if (input.isNew && index !== -1) fail(`Ya existe una skill con el id "${id}".`)
-  if (!input.isNew && index === -1) fail('Esa skill ya no existe.')
+    await syncRemote(true)
+    const list = await readCatalog()
+    const index = list.findIndex((item) => item.id === id)
+    if (input.isNew && index !== -1) fail(`Ya existe una skill con el id "${id}".`)
+    if (!input.isNew && index === -1) fail('Esa skill ya no existe.')
 
-  const skill = cleanSkill(input.skill as Json, id, index === -1 ? undefined : list[index])
-  if (index === -1) list.push(skill)
-  else list[index] = skill
+    const skill = cleanSkill(input.skill as Json, id, index === -1 ? undefined : list[index])
+    if (index === -1) list.push(skill)
+    else list[index] = skill
 
-  const dir = skillDir(id)
-  await mkdir(dir, { recursive: true })
-  await writeFile(join(dir, 'SKILL.md'), doc.endsWith('\n') ? doc : `${doc}\n`)
-  await writeCatalog(list)
-  return { skill }
+    const dir = skillDir(id)
+    await mkdir(dir, { recursive: true })
+    await writeFile(join(dir, 'SKILL.md'), doc.endsWith('\n') ? doc : `${doc}\n`)
+    await writeCatalog(list)
+    if (REMOTE) await publishRemote(`${input.isNew ? 'Añadir' : 'Actualizar'} skill ${String(skill.name)}`)
+    return { skill }
+  })
 }
 
-export async function adminDelete(id: string) {
-  assertId(id)
-  const list = await readCatalog()
-  const index = list.findIndex((item) => item.id === id)
-  if (index === -1) fail('Esa skill ya no existe.')
-  list.splice(index, 1)
+export function adminDelete(id: string) {
+  return serial(async () => {
+    assertId(id)
+    await syncRemote(true)
+    const list = await readCatalog()
+    const index = list.findIndex((item) => item.id === id)
+    if (index === -1) fail('Esa skill ya no existe.')
+    const name = String(list[index].name)
+    list.splice(index, 1)
 
-  const dir = skillDir(id)
-  let trashed: string | null = null
-  if (existsSync(dir)) {
-    await mkdir(TRASH, { recursive: true })
-    trashed = join(TRASH, `${id}-${Date.now()}`)
-    await rename(dir, trashed)
-  }
-  await writeCatalog(list)
-  return { id, trashed: trashed ? trashed.replace(ROOT + sep, '') : null }
+    const dir = skillDir(id)
+    let trashed: string | null = null
+    if (existsSync(dir)) {
+      if (REMOTE) {
+        // En remoto la papelera es el historial de git.
+        await rm(dir, { recursive: true, force: true })
+      } else {
+        await mkdir(TRASH, { recursive: true })
+        trashed = join(TRASH, `${id}-${Date.now()}`)
+        await rename(dir, trashed)
+      }
+    }
+    await writeCatalog(list)
+    if (REMOTE) await publishRemote(`Eliminar skill ${name}`)
+    return { id, trashed: trashed ? trashed.replace(ROOT + sep, '') : null }
+  })
 }
 
-// ---- Publicación (git) ----------------------------------------------------
+// ---- git ------------------------------------------------------------------
 
 const PUBLISH_PATHS = ['catalog', 'src/data/catalog.json']
 
-async function git(args: string[]) {
-  const { stdout } = await run('git', args, { cwd: ROOT, timeout: 60_000, maxBuffer: 4 * 1024 * 1024 })
+async function git(args: string[], cwd = ROOT) {
+  const { stdout } = await run('git', args, {
+    cwd,
+    timeout: 120_000,
+    maxBuffer: 4 * 1024 * 1024,
+    env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+  })
   return stdout.trim()
 }
 
+let lastSync = 0
+
+// Modo remoto: deja el clon igual que origin/main (clona la primera vez).
+export async function syncRemote(force = false) {
+  if (!REMOTE) return
+  if (!force && Date.now() - lastSync < 10_000) return
+  try {
+    if (!existsSync(join(ROOT, '.git'))) {
+      await mkdir(dirname(ROOT), { recursive: true })
+      await git(['clone', '--depth', '1', '--branch', BRANCH, REMOTE, ROOT], dirname(ROOT))
+    } else {
+      await git(['fetch', '--depth', '1', 'origin', BRANCH])
+      await git(['reset', '--hard', `origin/${BRANCH}`])
+      await git(['clean', '-fd', '--', ...PUBLISH_PATHS])
+    }
+  } catch (error) {
+    console.error('syncRemote', error instanceof Error ? error.message.split('\n')[0] : error)
+    fail('No se pudo conectar con el repositorio en GitHub. Revisa la llave de despliegue.')
+  }
+  lastSync = Date.now()
+}
+
+// Las escrituras van de una en una: hay un solo clon y un solo push a la vez.
+let queue: Promise<unknown> = Promise.resolve()
+
+function serial<T>(task: () => Promise<T>): Promise<T> {
+  const next = queue.then(task, task)
+  queue = next.catch(() => undefined)
+  return next
+}
+
+async function publishRemote(message: string) {
+  await git(['add', '-A', '--', ...PUBLISH_PATHS])
+  const dirty = await git(['status', '--porcelain', '--', ...PUBLISH_PATHS])
+  if (!dirty) return
+  await git([
+    '-c', 'user.name=Skill Store Admin',
+    '-c', 'user.email=admin@skill.dnet.llc',
+    'commit', '-m', message, '--', ...PUBLISH_PATHS,
+  ])
+  try {
+    await git(['push', 'origin', `HEAD:${BRANCH}`])
+  } catch {
+    lastSync = 0
+    fail('No se pudo subir el cambio (¿alguien publicó a la vez?). Vuelve a intentarlo.')
+  }
+}
+
 export async function adminStatus() {
+  // Remoto: no hay nada pendiente, cada guardado ya es un commit subido.
+  if (REMOTE) return { mode: adminMode, git: true, branch: BRANCH, changes: [], ahead: 0 }
   try {
     const changes = (await git(['status', '--porcelain', '--', ...PUBLISH_PATHS]))
       .split('\n')
@@ -220,13 +300,14 @@ export async function adminStatus() {
       ahead = 0
     }
     const branch = await git(['rev-parse', '--abbrev-ref', 'HEAD'])
-    return { git: true, branch, changes, ahead }
+    return { mode: adminMode, git: true, branch, changes, ahead }
   } catch {
-    return { git: false, branch: '', changes: [], ahead: 0 }
+    return { mode: adminMode, git: false, branch: '', changes: [], ahead: 0 }
   }
 }
 
 export async function adminPublish(message: unknown) {
+  if (REMOTE) fail('Aquí cada cambio se publica al guardar.')
   const msg = typeof message === 'string' ? message.trim() : ''
   if (!msg) fail('Escribe un mensaje para el cambio.')
   if (msg.length > 120) fail('El mensaje no puede pasar de 120 caracteres.')
