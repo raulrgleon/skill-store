@@ -846,7 +846,7 @@
       "repo": "anthropics/skills",
       "skill": "frontend-design",
       "url": "https://skills.sh/anthropics/skills/frontend-design",
-      "installs": 956363,
+      "installs": 953700,
       "license": "NOASSERTION"
     }
   },
@@ -922,7 +922,7 @@
       "repo": "vercel-labs/agent-skills",
       "skill": "vercel-react-best-practices",
       "url": "https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices",
-      "installs": 772764,
+      "installs": 770400,
       "license": "NOASSERTION"
     }
   },
@@ -992,7 +992,7 @@
       "repo": "vercel-labs/skills",
       "skill": "find-skills",
       "url": "https://skills.sh/vercel-labs/skills/find-skills",
-      "installs": 3712752,
+      "installs": 3700000,
       "license": "MIT"
     }
   },
@@ -1062,7 +1062,7 @@
       "repo": "vercel-labs/agent-skills",
       "skill": "web-design-guidelines",
       "url": "https://skills.sh/vercel-labs/agent-skills/web-design-guidelines",
-      "installs": 702483,
+      "installs": 700300,
       "license": "NOASSERTION"
     }
   },
@@ -1132,7 +1132,7 @@
       "repo": "anthropics/skills",
       "skill": "skill-creator",
       "url": "https://skills.sh/anthropics/skills/skill-creator",
-      "installs": 397411,
+      "installs": 397500,
       "license": "NOASSERTION"
     }
   },
@@ -1202,7 +1202,7 @@
       "repo": "vercel-labs/agent-skills",
       "skill": "vercel-composition-patterns",
       "url": "https://skills.sh/vercel-labs/agent-skills/vercel-composition-patterns",
-      "installs": 375052,
+      "installs": 373800,
       "license": "NOASSERTION"
     }
   },
@@ -1482,7 +1482,7 @@
       "repo": "vercel-labs/agent-skills",
       "skill": "vercel-react-native-skills",
       "url": "https://skills.sh/vercel-labs/agent-skills/vercel-react-native-skills",
-      "installs": 232279,
+      "installs": 231000,
       "license": "NOASSERTION"
     }
   },
@@ -1692,6 +1692,456 @@
       "url": "https://skills.sh/vercel-labs/agent-skills/writing-guidelines",
       "installs": 84988,
       "license": "NOASSERTION"
+    }
+  },
+  {
+    "id": "grill-me",
+    "name": "Grill-Me",
+    "subtitle": "Afina planes o diseños mediante entrevistas rigurosas",
+    "author": "Matt Pocock",
+    "category": "Productividad",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Esta skill realiza entrevistas intensas para evaluar y mejorar planes o diseños. Es útil cuando necesitas identificar debilidades, inconsistencias o áreas de mejora en tu propuesta antes de avanzar. Ideal para validar ideas y fortalecer estrategias mediante preguntas detalladas y críticas.",
+    "whatsNew": "Importada de skills.sh, donde suma 1.300.000 instalaciones.",
+    "version": "1.0",
+    "size": "1 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#FF375F",
+      "to": "#FF9F0A",
+      "glyph": "Gr",
+      "symbol": "brain"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "mattpocock/skills",
+      "skill": "grill-me",
+      "url": "https://skills.sh/mattpocock/skills/grill-me",
+      "installs": 1300000,
+      "license": "MIT",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "grill-with-docs",
+    "name": "Entrevista para plan y diseño",
+    "subtitle": "Afina planes y diseños creando documentación técnica",
+    "author": "Matt Pocock",
+    "category": "Ingeniería",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Realiza una entrevista exhaustiva para mejorar un plan o diseño, generando documentación técnica como ADRs y glosarios durante el proceso. Útil para clarificar decisiones y mantener un registro actualizado mientras se define un proyecto o sistema.",
+    "whatsNew": "Importada de skills.sh, donde suma 1.100.000 instalaciones.",
+    "version": "1.0",
+    "size": "1 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0F766E",
+      "to": "#5EEAD4",
+      "glyph": "Gr",
+      "symbol": "brain"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "mattpocock/skills",
+      "skill": "grill-with-docs",
+      "url": "https://skills.sh/mattpocock/skills/grill-with-docs",
+      "installs": 1100000,
+      "license": "MIT",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "improve-codebase-architecture",
+    "name": "Mejora Arquitectura Código",
+    "subtitle": "Detecta y propone refactorizaciones para profundizar módulos de código",
+    "author": "Matt Pocock",
+    "category": "Ingeniería",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Escanea la base de código para identificar puntos de fricción arquitectónicos y sugiere oportunidades de refactorización que transforman módulos superficiales en profundos, mejorando la testabilidad y navegabilidad por IA. Genera un reporte visual en HTML con análisis detallados y diagramas antes/después. Permite explorar y decidir qué refactorizar mediante un proceso guiado y actualizado con el modelo de dominio del proyecto.",
+    "whatsNew": "Importada de skills.sh, donde suma 1.000.000 instalaciones.",
+    "version": "1.0",
+    "size": "14 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#4338CA",
+      "to": "#818CF8",
+      "glyph": "Im",
+      "symbol": "code"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "mattpocock/skills",
+      "skill": "improve-codebase-architecture",
+      "url": "https://skills.sh/mattpocock/skills/improve-codebase-architecture",
+      "installs": 1000000,
+      "license": "MIT",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "agent-browser",
+    "name": "agent-browser",
+    "subtitle": "Automatiza tareas y pruebas en navegadores y apps web",
+    "author": "Vercel",
+    "category": "Ingeniería",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "CLI rápida para automatizar interacciones en Chrome/Chromium mediante AI agents. Permite navegar, completar formularios, hacer clic, tomar capturas, extraer datos y probar aplicaciones web. También automatiza apps Electron y gestiona sesiones, autenticación y grabación de video. Útil para testing exploratorio, QA, automatización en la nube y manejo avanzado de navegadores.",
+    "whatsNew": "Importada de skills.sh, donde suma 1.000.000 instalaciones.",
+    "version": "1.0",
+    "size": "14 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#4338CA",
+      "to": "#818CF8",
+      "glyph": "Ag",
+      "symbol": "rocket"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "vercel-labs/agent-browser",
+      "skill": "agent-browser",
+      "url": "https://skills.sh/vercel-labs/agent-browser/agent-browser",
+      "installs": 1000000,
+      "license": "Apache-2.0",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "tdd",
+    "name": "Desarrollo Guiado por Pruebas",
+    "subtitle": "Crear y corregir código escribiendo pruebas antes de la implementación",
+    "author": "Matt Pocock",
+    "category": "Ingeniería",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Esta skill guía el ciclo red → green → refactor para construir funcionalidades o corregir errores con pruebas previas. Define qué es una buena prueba, dónde ubicarlas (seams) y evita anti-patrones comunes. Úsala para asegurar que las pruebas validan el comportamiento público y sobreviven refactorizaciones, enfocando el esfuerzo en caminos críticos y lógica compleja.",
+    "whatsNew": "Importada de skills.sh, donde suma 1.000.000 instalaciones.",
+    "version": "1.0",
+    "size": "8 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0F766E",
+      "to": "#5EEAD4",
+      "glyph": "TD",
+      "symbol": "code"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "mattpocock/skills",
+      "skill": "tdd",
+      "url": "https://skills.sh/mattpocock/skills/tdd",
+      "installs": 1000000,
+      "license": "MIT",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "setup-matt-pocock-skills",
+    "name": "Setup Skills Ingeniería",
+    "subtitle": "Configura el repositorio para usar las skills de ingeniería",
+    "author": "Matt Pocock",
+    "category": "Ingeniería",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Prepara el repositorio para las skills de ingeniería configurando el rastreador de issues, el vocabulario de etiquetas de triage y la estructura de documentación de dominio. Se ejecuta una vez antes de usar otras skills de ingeniería para asegurar que el entorno está correctamente organizado y documentado. Ideal para iniciar proyectos que integran estas herramientas.",
+    "whatsNew": "Importada de skills.sh, donde suma 939.300 instalaciones.",
+    "version": "1.0",
+    "size": "20 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0F766E",
+      "to": "#5EEAD4",
+      "glyph": "Se",
+      "symbol": "wrench"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "mattpocock/skills",
+      "skill": "setup-matt-pocock-skills",
+      "url": "https://skills.sh/mattpocock/skills/setup-matt-pocock-skills",
+      "installs": 939300,
+      "license": "MIT",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "hyperframes-cli",
+    "name": "HyperFrames CLI",
+    "subtitle": "Herramienta para crear y editar composiciones de video con comandos",
+    "author": "HeyGen",
+    "category": "Ingeniería",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Permite iniciar proyectos, buscar efectos visuales, componer y editar líneas de tiempo de video mediante comandos CLI. Facilita la iteración rápida con validaciones y previsualizaciones antes de la renderización final. Útil para desarrolladores que trabajan con animaciones y edición programática de videos.",
+    "whatsNew": "Importada de skills.sh, donde suma 811.300 instalaciones.",
+    "version": "1.0",
+    "size": "131 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0F766E",
+      "to": "#5EEAD4",
+      "glyph": "Hy",
+      "symbol": "terminal"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "heygen-com/hyperframes",
+      "skill": "hyperframes-cli",
+      "url": "https://skills.sh/heygen-com/hyperframes/hyperframes-cli",
+      "installs": 811300,
+      "license": "Apache-2.0",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "reddit-automation",
+    "name": "Reddit Automation",
+    "subtitle": "Encuentra y responde oportunidades reales en Reddit para tu producto",
+    "author": "flowkit-labs",
+    "category": "Marketing",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Esta skill identifica hilos en Reddit donde usuarios expresan necesidades que tu producto puede resolver y genera borradores de respuestas útiles y honestas. Se usa para detectar oportunidades genuinas de interacción y crear respuestas que aporten valor sin hacer spam, siempre respetando las reglas de cada comunidad y divulgando afiliaciones cuando se menciona el producto.",
+    "whatsNew": "Importada de skills.sh, donde suma 799.700 instalaciones.",
+    "version": "1.0",
+    "size": "9 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#4338CA",
+      "to": "#818CF8",
+      "glyph": "Re",
+      "symbol": "megaphone"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "flowkit-labs/skills",
+      "skill": "reddit-automation",
+      "url": "https://skills.sh/flowkit-labs/skills/reddit-automation",
+      "installs": 799700,
+      "license": "MIT",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "hyperframes",
+    "name": "HyperFrames",
+    "subtitle": "Renderiza videos a partir de composiciones HTML con control de tiempo",
+    "author": "HeyGen",
+    "category": "Diseño",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "HyperFrames convierte archivos HTML en videos animados, usando atributos data-* para controlar el tiempo y la reproducción. Permite crear, editar, previsualizar y renderizar videos dentro de un proyecto, gestionando el flujo de trabajo desde el storyboard hasta la producción. Es útil para proyectos que requieren animaciones precisas y renderizado programático basado en HTML.",
+    "whatsNew": "Importada de skills.sh, donde suma 778.400 instalaciones.",
+    "version": "1.0",
+    "size": "157 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#0A84FF",
+      "to": "#64D2FF",
+      "glyph": "Hy",
+      "symbol": "video"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "heygen-com/hyperframes",
+      "skill": "hyperframes",
+      "url": "https://skills.sh/heygen-com/hyperframes/hyperframes",
+      "installs": 778400,
+      "license": "Apache-2.0",
+      "importedAt": "2026-10-05"
+    }
+  },
+  {
+    "id": "domain-modeling",
+    "name": "Modelado de Dominio",
+    "subtitle": "Construye y mejora el modelo de dominio del proyecto",
+    "author": "Matt Pocock",
+    "category": "Ingeniería",
+    "rating": 0,
+    "ratingsCount": 0,
+    "price": "Gratis",
+    "verified": false,
+    "agents": [
+      "Cursor",
+      "Claude",
+      "Codex"
+    ],
+    "compatibility": {
+      "Cursor": "full",
+      "Claude": "full",
+      "ChatGPT": "none",
+      "Codex": "full",
+      "Gemini": "none",
+      "Copilot": "none"
+    },
+    "description": "Permite definir y afinar activamente la terminología y conceptos clave del proyecto mientras se diseña. Útil para crear o editar el archivo GLOSSARY.md y registrar decisiones arquitectónicas en ADRs. Detecta conflictos en términos, propone definiciones precisas y verifica coherencia con el código en tiempo real.",
+    "whatsNew": "Importada de skills.sh, donde suma 756.700 instalaciones.",
+    "version": "1.0",
+    "size": "9 KB",
+    "age": "4+",
+    "icon": {
+      "from": "#BF5AF2",
+      "to": "#5E5CE6",
+      "glyph": "Do",
+      "symbol": "brain"
+    },
+    "screenshots": [],
+    "reviews": [],
+    "source": {
+      "repo": "mattpocock/skills",
+      "skill": "domain-modeling",
+      "url": "https://skills.sh/mattpocock/skills/domain-modeling",
+      "installs": 756700,
+      "license": "MIT",
+      "importedAt": "2026-10-05"
     }
   }
 ]

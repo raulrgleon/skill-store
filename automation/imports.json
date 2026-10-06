@@ -1,0 +1,91 @@
+{
+  "runs": [
+    {
+      "date": "2026-10-05",
+      "added": [
+        {
+          "id": "grill-me",
+          "source": "mattpocock/skills/grill-me",
+          "installs": 1300000,
+          "files": 3,
+          "license": "MIT",
+          "spanish": true
+        },
+        {
+          "id": "grill-with-docs",
+          "source": "mattpocock/skills/grill-with-docs",
+          "installs": 1100000,
+          "files": 3,
+          "license": "MIT",
+          "spanish": true
+        },
+        {
+          "id": "improve-codebase-architecture",
+          "source": "mattpocock/skills/improve-codebase-architecture",
+          "installs": 1000000,
+          "files": 4,
+          "license": "MIT",
+          "spanish": true
+        },
+        {
+          "id": "agent-browser",
+          "source": "vercel-labs/agent-browser/agent-browser",
+          "installs": 1000000,
+          "files": 2,
+          "license": "Apache-2.0",
+          "spanish": true
+        },
+        {
+          "id": "tdd",
+          "source": "mattpocock/skills/tdd",
+          "installs": 1000000,
+          "files": 5,
+          "license": "MIT",
+          "spanish": true
+        },
+        {
+          "id": "setup-matt-pocock-skills",
+          "source": "mattpocock/skills/setup-matt-pocock-skills",
+          "installs": 939300,
+          "files": 8,
+          "license": "MIT",
+          "spanish": true
+        },
+        {
+          "id": "hyperframes-cli",
+          "source": "heygen-com/hyperframes/hyperframes-cli",
+          "installs": 811300,
+          "files": 12,
+          "license": "Apache-2.0",
+          "spanish": true
+        },
+        {
+          "id": "reddit-automation",
+          "source": "flowkit-labs/skills/reddit-automation",
+          "installs": 799700,
+          "files": 2,
+          "license": "MIT",
+          "spanish": true
+        },
+        {
+          "id": "hyperframes",
+          "source": "heygen-com/hyperframes/hyperframes",
+          "installs": 778400,
+          "files": 30,
+          "license": "Apache-2.0",
+          "spanish": true
+        },
+        {
+          "id": "domain-modeling",
+          "source": "mattpocock/skills/domain-modeling",
+          "installs": 756700,
+          "files": 5,
+          "license": "MIT",
+          "spanish": true
+        }
+      ],
+      "skipped": []
+    }
+  ],
+  "lastRun": "2026-10-05"
+}
