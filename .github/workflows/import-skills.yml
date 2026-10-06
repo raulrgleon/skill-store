@@ -19,7 +19,6 @@ on:
 
 permissions:
   contents: write
-  models: read
 
 concurrency:
   group: import-skills
@@ -40,6 +39,8 @@ jobs:
       - name: Importar desde skills.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Opcional: con esta clave las fichas se redactan en español.
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           IMPORT_LIMIT: ${{ inputs.limit || '10' }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
           FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}

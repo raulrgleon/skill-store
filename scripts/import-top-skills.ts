@@ -4,7 +4,7 @@
 //
 // Por cada skill: localiza su SKILL.md en GitHub, copia la carpeta (solo archivos de texto),
 // añade la licencia del repositorio si la carpeta no trae una, y redacta la ficha en español con
-// GitHub Models. Si el modelo no responde, usa la descripción original.
+// OpenAI si hay OPENAI_API_KEY. Sin clave (o si el modelo falla) usa la descripción original.
 
 import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
@@ -24,7 +24,8 @@ const LIMIT = Math.max(1, Math.min(25, Number(process.env.IMPORT_LIMIT ?? 10) ||
 const DRY_RUN = process.env.DRY_RUN === '1' || process.env.DRY_RUN === 'true'
 const FORCE = process.env.FORCE === '1' || process.env.FORCE === 'true'
 const TIME_ZONE = process.env.IMPORT_TIME_ZONE ?? 'America/Chicago'
-const MODEL = process.env.IMPORT_MODEL ?? 'openai/gpt-4.1-mini'
+const OPENAI_KEY = process.env.OPENAI_API_KEY ?? ''
+const MODEL = process.env.IMPORT_MODEL || 'gpt-4.1-mini'
 
 const MAX_FILES = 60
 const MAX_FILE = 400_000
@@ -123,11 +124,13 @@ function slugify(value: string) {
     .replace(/-+$/g, '')
 }
 
+const ACRONYMS = new Set(['ai', 'api', 'cli', 'css', 'db', 'ui', 'ux', 'mcp', 'seo', 'sql', 'tdd', 'pr', 'qa', 'pdf', 'aws', 'gcp', 'sdk', 'llm', 'html', 'json', 'yaml'])
+
 function titleCase(id: string) {
   return id
     .split(/[-_]+/)
     .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => (ACRONYMS.has(word.toLowerCase()) ? word.toUpperCase() : word.charAt(0).toUpperCase() + word.slice(1)))
     .join(' ')
 }
 
@@ -265,12 +268,12 @@ async function authorName(owner: string) {
   }
 }
 
-// ---- ficha en español con GitHub Models ------------------------------------
+// ---- ficha en español con OpenAI ------------------------------------------
 
 type Copywriting = { name: string; subtitle: string; description: string; category: string; symbol: string }
 
 async function copywrite(entry: Entry, doc: string): Promise<Copywriting | null> {
-  if (!TOKEN) return null
+  if (!OPENAI_KEY) return null
   const meta = frontmatter(doc)
   const body = doc.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').slice(0, 6000)
   const prompt = [
@@ -289,10 +292,10 @@ async function copywrite(entry: Entry, doc: string): Promise<Copywriting | null>
   ].join('\n')
 
   try {
-    const response = await http('https://models.github.ai/inference/chat/completions', {
+    const response = await http('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${OPENAI_KEY}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
@@ -378,6 +381,7 @@ async function main() {
 
   const ranking = await leaderboard()
   log(`Ranking de skills.sh: ${ranking.length} skills. Límite de hoy: ${LIMIT}.${DRY_RUN ? ' (simulación)' : ''}`)
+  if (!OPENAI_KEY) log('Sin OPENAI_API_KEY: las fichas nuevas usarán la descripción original del autor.')
 
   // Las ya importadas se actualizan con su número de instalaciones de hoy.
   for (const item of catalog) {
