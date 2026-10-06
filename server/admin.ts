@@ -135,7 +135,7 @@ function cleanSkill(input: Json, id: string, previous?: Json): Json {
   }
 
   // Campos que el formulario no edita se conservan tal cual.
-  for (const key of ['story', 'screenshots', 'reviews']) {
+  for (const key of ['story', 'screenshots', 'reviews', 'source']) {
     if (previous && previous[key] !== undefined) next[key] = previous[key]
   }
   next.screenshots ??= []

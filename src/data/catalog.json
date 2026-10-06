@@ -841,7 +841,14 @@
         "text": "950 mil installs. La skill de diseño más usada del ecosistema.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "anthropics/skills",
+      "skill": "frontend-design",
+      "url": "https://skills.sh/anthropics/skills/frontend-design",
+      "installs": 956363,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "react-best-practices",
@@ -910,7 +917,14 @@
         "text": "La skill de ingeniería web más instalada de Vercel.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "vercel-react-best-practices",
+      "url": "https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices",
+      "installs": 772764,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "find-skills",
@@ -973,7 +987,14 @@
         "text": "3,7 millones de installs. El buscador del ecosistema.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/skills",
+      "skill": "find-skills",
+      "url": "https://skills.sh/vercel-labs/skills/find-skills",
+      "installs": 3712752,
+      "license": "MIT"
+    }
   },
   {
     "id": "web-design-guidelines",
@@ -1036,7 +1057,14 @@
         "text": "696 mil installs. El checklist visual de Vercel.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "web-design-guidelines",
+      "url": "https://skills.sh/vercel-labs/agent-skills/web-design-guidelines",
+      "installs": 702483,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "skill-creator",
@@ -1099,7 +1127,14 @@
         "text": "398 mil installs. El manual de Anthropic para authors.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "anthropics/skills",
+      "skill": "skill-creator",
+      "url": "https://skills.sh/anthropics/skills/skill-creator",
+      "installs": 397411,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "composition-patterns",
@@ -1162,7 +1197,14 @@
         "text": "372 mil installs. Architecture, no snippets sueltos.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "vercel-composition-patterns",
+      "url": "https://skills.sh/vercel-labs/agent-skills/vercel-composition-patterns",
+      "installs": 375052,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "mcp-builder",
@@ -1225,7 +1267,14 @@
         "text": "La base si vas a exponer un servicio al agente.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "anthropics/skills",
+      "skill": "mcp-builder",
+      "url": "https://skills.sh/anthropics/skills/mcp-builder",
+      "installs": 122771,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "webapp-testing",
@@ -1288,7 +1337,14 @@
         "text": "Complementa QA Playwright con el toolkit de Anthropic.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "anthropics/skills",
+      "skill": "webapp-testing",
+      "url": "https://skills.sh/anthropics/skills/webapp-testing",
+      "installs": 170931,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "doc-coauthoring",
@@ -1351,7 +1407,14 @@
         "text": "La skill de escritura de Anthropic, no un lorem.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "anthropics/skills",
+      "skill": "doc-coauthoring",
+      "url": "https://skills.sh/anthropics/skills/doc-coauthoring",
+      "installs": 88733,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "react-native-skills",
@@ -1414,7 +1477,14 @@
         "text": "231 mil installs. El pack móvil de Vercel.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "vercel-react-native-skills",
+      "url": "https://skills.sh/vercel-labs/agent-skills/vercel-react-native-skills",
+      "installs": 232279,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "vercel-optimize",
@@ -1476,7 +1546,14 @@
         "text": "La skill de factura y latencia, del propio Vercel.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "vercel-optimize",
+      "url": "https://skills.sh/vercel-labs/agent-skills/vercel-optimize",
+      "installs": 89925,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "deploy-to-vercel",
@@ -1538,7 +1615,14 @@
         "text": "La skill de deploy más clara del catálogo de Vercel.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "deploy-to-vercel",
+      "url": "https://skills.sh/vercel-labs/agent-skills/deploy-to-vercel",
+      "installs": 146914,
+      "license": "NOASSERTION"
+    }
   },
   {
     "id": "writing-guidelines",
@@ -1601,6 +1685,13 @@
         "text": "La pareja de Web Design Guidelines, para texto.",
         "date": "Hoy"
       }
-    ]
+    ],
+    "source": {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "writing-guidelines",
+      "url": "https://skills.sh/vercel-labs/agent-skills/writing-guidelines",
+      "installs": 84988,
+      "license": "NOASSERTION"
+    }
   }
 ]

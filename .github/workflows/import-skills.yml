@@ -1,0 +1,74 @@
+name: Importar skills populares
+
+# Cada noche a las 00:00 de Chicago añade al catálogo las skills más instaladas de skills.sh.
+# GitHub solo admite cron en UTC: se lanza a las 05:00 y 06:00 UTC (medianoche en horario de
+# verano y de invierno) y el script descarta la ejecución que no toca.
+on:
+  schedule:
+    - cron: '0 5 * * *'
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: Máximo de skills nuevas
+        default: '10'
+      dry_run:
+        description: Simular sin guardar nada
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  models: read
+
+concurrency:
+  group: import-skills
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Importar desde skills.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IMPORT_LIMIT: ${{ inputs.limit || '10' }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+        run: node --experimental-strip-types --no-warnings scripts/import-top-skills.ts
+
+      - name: ¿Hay cambios?
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain -- catalog src/data/catalog.json automation)" ]; then
+            echo "dirty=1" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Si la web no compila con las skills nuevas, no se publica nada.
+      - name: Comprobar que la web compila
+        if: steps.changes.outputs.dirty == '1'
+        run: |
+          npm ci
+          npm run build
+
+      - name: Publicar
+        if: steps.changes.outputs.dirty == '1'
+        run: |
+          git config user.name "Skill Store Bot"
+          git config user.email "bot@skill.dnet.llc"
+          git add -A -- catalog src/data/catalog.json automation
+          added=$(node -e "const l=require('./automation/imports.json');console.log((l.runs[0]?.added||[]).length)")
+          git commit -m "Importar ${added} skills populares de skills.sh"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1

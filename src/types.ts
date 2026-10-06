@@ -6,6 +6,16 @@ export type StoreTab = 'hoy' | 'explorar' | 'equipos' | 'biblioteca'
 
 export type GalleryImage = { file: string; caption: string; w?: number; h?: number }
 
+// De dónde se importó una skill de terceros (skills.sh + repositorio de GitHub).
+export type SkillSource = {
+  repo: string
+  skill: string
+  url: string
+  installs?: number
+  license?: string
+  importedAt?: string
+}
+
 export type Skill = {
   id: string
   name: string
@@ -34,5 +44,6 @@ export type Skill = {
   screenshots: { title: string; body: string; from: string; to: string }[]
   // Imágenes reales: se sirven desde /media/<id>/<file>.
   gallery?: GalleryImage[]
+  source?: SkillSource
   reviews: { user: string; rating: number; text: string; date: string }[]
 }

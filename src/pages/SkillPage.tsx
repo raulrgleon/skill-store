@@ -285,6 +285,20 @@ export function SkillPage({ id }: { id: string }) {
             <dl className="space-y-2 text-[14px]">
               <Row label="Precio" value={skill.price} />
               <Row label="Categoría" value={skill.category} />
+              {skill.source ? (
+                <>
+                  {skill.source.installs ? <Row label="Instalaciones" value={formatCount(skill.source.installs)} /> : null}
+                  {skill.source.license && skill.source.license !== 'NOASSERTION' ? <Row label="Licencia" value={skill.source.license} /> : null}
+                  <div className="flex items-center justify-between gap-4">
+                    <dt className="text-mute">Origen</dt>
+                    <dd className="min-w-0 truncate">
+                      <a href={skill.source.url} target="_blank" rel="noreferrer" className="text-accent hover:underline">
+                        {skill.source.repo}
+                      </a>
+                    </dd>
+                  </div>
+                </>
+              ) : null}
             </dl>
             <div>
               <p className="text-[13px] text-mute">Compatibilidad</p>
